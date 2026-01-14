@@ -27,12 +27,23 @@ cd tinto
 pip install -r requirements.txt
 ```
 
+3. Configure as variáveis de ambiente (opcional):
+```bash
+cp .env.example .env
+# Edite o arquivo .env com suas configurações
+```
+
 ## 🏃 Executando a Aplicação
 
 Execute o servidor de desenvolvimento:
 
 ```bash
 python app.py
+```
+
+Para desenvolvimento com debug ativado:
+```bash
+FLASK_DEBUG=true python app.py
 ```
 
 A aplicação estará disponível em: `http://localhost:5000`
@@ -61,6 +72,15 @@ tinto/
 - ✅ Integração com Jungle (AWS)
 - ✅ Sistema de navegação entre páginas
 - ✅ Verificação de status do backend em tempo real
+
+## ⚙️ Configuração
+
+O projeto suporta configuração via variáveis de ambiente:
+
+- `SECRET_KEY` - Chave secreta para o Flask (obrigatório em produção)
+- `FLASK_DEBUG` - Ativa modo debug (use apenas em desenvolvimento)
+
+Copie o arquivo `.env.example` para `.env` e configure as variáveis necessárias.
 
 ## 🎓 Contexto Acadêmico
 
