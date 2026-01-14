@@ -17,9 +17,11 @@ def index():
 @app.route('/api/status')
 def api_status():
     """Endpoint de API para verificar status"""
+    jungle_version = getattr(jungle, '__version__', '1.0.0')
     return jsonify({
         'status': 'online',
         'backend': 'jungle',
+        'jungle_version': jungle_version,
         'message': 'Webapp Tinto está funcionando!'
     })
 

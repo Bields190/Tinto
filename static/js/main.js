@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     statusResult.innerHTML = `
                         <strong>✓ Status:</strong> ${data.status}<br>
                         <strong>Backend:</strong> ${data.backend}<br>
+                        <strong>Jungle Version:</strong> ${data.jungle_version}<br>
                         <strong>Mensagem:</strong> ${data.message}
                     `;
                 } else {
