@@ -15,14 +15,13 @@ public class UsuarioService {
     private UsuarioRepository usuarioRepository;
 
     @Autowired
-    private BCryptPasswordEncoder passwordEncoder; // Adicionado
+    private BCryptPasswordEncoder passwordEncoder;
 
     public Usuario cadastrarUsuario(Usuario usuario) {
         if (calcularIdade(usuario.getDataNascimento()) < 18) {
             throw new IllegalArgumentException("Usuário deve ser maior de 18 anos.");
         }
         
-        // CRIPTOGRAFIA DA SENHA (NRF2)
         usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
         
         return usuarioRepository.save(usuario);

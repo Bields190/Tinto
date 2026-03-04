@@ -11,7 +11,6 @@ public interface VinhoRepository extends JpaRepository<Vinho, Long> {
     // Busca vinhos de um usuário específico
     List<Vinho> findByUsuarioId(Long usuarioId);
     
-    // Métodos de busca para o RF6
     List<Vinho> findByNomeContainingIgnoreCase(String nome);
     List<Vinho> findByVinicolaContainingIgnoreCase(String vinicola);
     List<Vinho> findByTipoUvaContainingIgnoreCase(String tipoUva);

@@ -1,7 +1,7 @@
 package com.tinto.api.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import java.util.Objects;
 
 @Entity
 @Table(name = "fotos_vinho")
@@ -11,53 +11,20 @@ public class FotoVinho {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private String caminhoArquivo; // Caminho no servidor ou bucket (RF7) 
+    private String arquivoPath;
 
     @ManyToOne
-    @JoinColumn(name = "vinho_id", nullable = false)
-    private Vinho vinho; // Vinho ao qual a foto pertence
-
-    // Construtor Padrão (Obrigatório para o JPA)
-    public FotoVinho() {
-    }
+    @JoinColumn(name = "vinho_id")
+    @JsonIgnore 
+    private Vinho vinho;
 
     // Getters e Setters
-    public Long getId() {
-        return id;
-    }
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public String getArquivoPath() { return arquivoPath; }
+    public void setArquivoPath(String arquivoPath) { this.arquivoPath = arquivoPath; }
 
-    public String getCaminhoArquivo() {
-        return caminhoArquivo;
-    }
-
-    public void setCaminhoArquivo(String caminhoArquivo) {
-        this.caminhoArquivo = caminhoArquivo;
-    }
-
-    public Vinho getVinho() {
-        return vinho;
-    }
-
-    public void setVinho(Vinho vinho) {
-        this.vinho = vinho;
-    }
-
-    // Equals e HashCode baseados no ID para garantir integridade
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        FotoVinho fotoVinho = (FotoVinho) o;
-        return Objects.equals(id, fotoVinho.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
+    public Vinho getVinho() { return vinho; }
+    public void setVinho(Vinho vinho) { this.vinho = vinho; }
 }

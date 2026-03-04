@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 @Entity
 @Table(name = "usuarios")
 public class Usuario {
@@ -18,13 +20,14 @@ public class Usuario {
     @Column(nullable = false, unique = true)
     private String email; // E-mail para login 
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Column(nullable = false)
     private String senha; // Armazenará o hash da password (NRF2) 
 
     @Column(name = "data_nascimento", nullable = false)
-    private LocalDate dataNascimento; // Para verificação da maioridade (L1, L3) 
+    private LocalDate dataNascimento; 
 
-    // Construtor Padrão (Obrigatório para o JPA)
+    // Construtor Padrão 
     public Usuario() {
     }
 

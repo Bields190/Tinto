@@ -26,19 +26,14 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-            // Sintaxe Lambda para CSRF
             .csrf(AbstractHttpConfigurer::disable)
-            // Sintaxe Lambda para autorização
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/api/usuarios/cadastrar", "/api/auth/login").permitAll()
                 .anyRequest().authenticated()
             )
-            // Sintaxe Lambda para gerenciamento de sessão
             .sessionManagement(session -> session
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             );
-
-        // Adiciona o filtro antes do filtro padrão de autenticação
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();

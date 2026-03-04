@@ -12,7 +12,7 @@ public class FotoVinhoService {
     private FotoVinhoRepository fotoVinhoRepository;
 
     public FotoVinho adicionarFoto(FotoVinho foto) {
-        // Validação de Limite de Fotos (RF7)
+        // Validação 
         int quantidadeFotos = fotoVinhoRepository.countByVinhoId(foto.getVinho().getId());
         if (quantidadeFotos >= 3) {
             throw new IllegalStateException("Limite de 3 fotos por vinho atingido.");
