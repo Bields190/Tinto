@@ -23,4 +23,45 @@ public class UsuarioController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
+
+    @PostMapping("/validar")
+    public ResponseEntity<String> validar(@RequestParam String senhaAtual) {
+        boolean valido = usuarioService.validarSenha(senhaAtual);
+        if (valido) {
+            return ResponseEntity.ok("OK");
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Senha incorreta");
+        }
+    }
+
+    @PutMapping("/alterar/nome")
+    public ResponseEntity<?> alterarNome(@RequestParam String senhaAtual, @RequestParam String novoNome) {
+        try {
+            Usuario usuario = usuarioService.alterarNome(senhaAtual, novoNome);
+            return ResponseEntity.ok(usuario);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PutMapping("/alterar/senha")
+    public ResponseEntity<?> alterarSenha(@RequestParam String senhaAtual, @RequestParam String novaSenha) {
+        try {
+            Usuario usuario = usuarioService.alterarSenha(senhaAtual, novaSenha);
+            return ResponseEntity.ok("Senha alterada com sucesso");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PutMapping("/alterar/email")
+    public ResponseEntity<?> alterarEmail(@RequestParam String senhaAtual, @RequestParam String novoEmail) {
+        try {
+            Usuario usuario = usuarioService.alterarEmail(senhaAtual, novoEmail);
+            return ResponseEntity.ok(usuario);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
 }
