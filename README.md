@@ -1,7 +1,7 @@
 # Tinto.
 Repositório Criado como complemento da disciplina de Engenharia de Software I. Ministrado pelo [Professor Daricélio Soares](https://github.com/daricelio "Professor Daricélio Soares") na Universidade Federal do Acre.
 
-![TintoLogo](https://github.com/Bields190/Tinto/blob/main/image.png)
+![TintoLogo](https://github.com/Bields190/Tinto/blob/develop/frontend/TintoApp/src/assets/img/Tinto%20-%20Areia.png)
 
 ---
 ## Cada Vinho, uma História
