@@ -1,0 +1,123 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Urbanist:wght@400;500;600;700&display=swap');
+
+:root {
+  --fonte-titulo: 'Cormorant Garamond', serif;
+  --fonte-corpo: 'Urbanist', sans-serif;
+
+  --cor-fundo-principal: #3a001f;
+  --cor-fundo-secundario: #5f0a39;
+  --cor-vinho: #7f0f45;
+  --cor-vinho-escuro: #2b0017;
+  --cor-creme: #f6ddc4;
+  --cor-creme-escuro: #e8c7a4;
+  --cor-texto-claro: #fff3e8;
+  --cor-texto-suave: #f3d5bd;
+
+  --sombra-padrao: 0 12px 35px rgb(18 3 10 / 35%);
+  --borda-arredondada-grande: 1.4rem;
+  --borda-arredondada-media: 0.9rem;
+
+  --largura-conteudo: 1200px;
+  --espacamento-sessao: clamp(1.5rem, 3vw, 3rem);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  font-family: var(--fonte-corpo);
+  background:
+    radial-gradient(circle at 15% 10%, #8c144f 0%, transparent 35%),
+    radial-gradient(circle at 85% 90%, #310019 0%, transparent 40%),
+    linear-gradient(135deg, var(--cor-fundo-principal) 0%, var(--cor-fundo-secundario) 100%);
+  color: var(--cor-texto-claro);
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+.pagina {
+  min-height: 100dvh;
+  width: min(100% - 2rem, var(--largura-conteudo));
+  margin-inline: auto;
+  padding-block: clamp(1.5rem, 4vw, 2.5rem);
+}
+
+.container-padrao {
+  width: min(100%, var(--largura-conteudo));
+  margin-inline: auto;
+}
+
+.botao-padrao {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-width: 10.5rem;
+  padding: 0.85rem 1.7rem;
+  border-radius: 0.9rem;
+  border: 1px solid transparent;
+  background-color: var(--cor-creme);
+  color: var(--cor-vinho-escuro);
+  font-family: var(--fonte-corpo);
+  font-size: 1.75rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: transform 180ms ease, box-shadow 180ms ease, filter 180ms ease;
+}
+
+.botao-padrao:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 22px rgb(32 7 19 / 32%);
+  filter: brightness(1.02);
+}
+
+.botao-padrao:active {
+  transform: translateY(0);
+}
+
+.botao-padrao:focus-visible {
+  outline: 2px solid var(--cor-creme);
+  outline-offset: 2px;
+}
+
+.botao-padrao--contorno {
+  background: transparent;
+  border-color: var(--cor-creme);
+  color: var(--cor-creme);
+}
+
+.titulo-pagina {
+  margin: 0;
+  font-family: var(--fonte-titulo);
+  font-size: clamp(3.2rem, 10vw, 8rem);
+  letter-spacing: 0.04em;
+  line-height: 0.92;
+  text-transform: uppercase;
+}
+
+.subtitulo-pagina {
+  margin: 0;
+  font-size: clamp(1.15rem, 2.6vw, 2.2rem);
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+
+.texto-pagina {
+  margin: 0;
+  font-size: clamp(1.05rem, 2.1vw, 1.95rem);
+  line-height: 1.45;
+  color: var(--cor-texto-suave);
+}

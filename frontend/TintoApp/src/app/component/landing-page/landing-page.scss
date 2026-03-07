@@ -1,0 +1,153 @@
+:host {
+	display: block;
+}
+
+.pagina-inicial {
+	display: grid;
+	align-items: center;
+}
+
+.painel-inicial {
+	display: grid;
+	grid-template-columns: 1.05fr 1fr;
+	gap: clamp(1.2rem, 3vw, 2.4rem);
+	align-items: end;
+}
+
+.bloco-apresentacao {
+	display: grid;
+	gap: clamp(1rem, 2.2vw, 1.8rem);
+}
+
+.cabecalho-apresentacao {
+	display: grid;
+	gap: 1rem;
+}
+
+.titulo-acessivel {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	white-space: nowrap;
+	border: 0;
+}
+
+.logo-marca {
+	width: min(100%, clamp(15rem, 46vw, 31rem));
+}
+
+.subtitulo-pagina {
+	color: var(--cor-texto-claro);
+}
+
+.descricao-apresentacao {
+	max-width: 28ch;
+}
+
+.acoes-apresentacao {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.9rem;
+}
+
+.bloco-visual {
+	display: grid;
+	gap: 0.9rem;
+	min-height: clamp(22rem, 54vw, 33rem);
+	padding-block: 1.5rem;
+	--garrafa-x: 55%;
+	--garrafa-y: -43%;
+	--garrafa-w: clamp(11.2rem, 24vw, 19.5rem);
+}
+
+.cartao-imagem {
+	border-radius: var(--borda-arredondada-grande);
+	box-shadow: var(--sombra-padrao);
+	background-color: #2f0717;
+	background-size: cover;
+	background-position: center;
+}
+
+.cartao-imagem--superior {
+	height: clamp(8.3rem, 15vw, 10rem);
+	background-image:
+		linear-gradient(140deg, rgb(19 5 10 / 40%), rgb(19 5 10 / 60%)),
+		url('/assets/img/landing-fundo-superior.jpg');
+}
+
+.cartao-imagem--inferior {
+	height: clamp(11rem, 22vw, 16rem);
+	background-image:
+		linear-gradient(140deg, rgb(17 6 10 / 36%), rgb(17 6 10 / 50%)),
+		url('/assets/img/landing-fundo-inferior.jpg');
+}
+
+.bloco-inferior-com-garrafa {
+	position: relative;
+}
+
+.garrafa-destaque {
+	position: absolute;
+	left: var(--garrafa-x);
+	top: 0;
+	width: var(--garrafa-w);
+	aspect-ratio: 1 / 2.3;
+	transform: translate(-50%, var(--garrafa-y));
+	background-image: url('/assets/img/landing-garrafa.png');
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center top;
+	pointer-events: none;
+	z-index: 2;
+}
+
+@media (max-width: 920px) {
+	.painel-inicial {
+		grid-template-columns: 1fr;
+		align-items: start;
+	}
+
+	.descricao-apresentacao {
+		max-width: 60ch;
+	}
+
+	.bloco-visual {
+		min-height: clamp(18rem, 72vw, 30rem);
+		--garrafa-x: 60%;
+		--garrafa-y: -50%;
+		--garrafa-w: clamp(10rem, 30vw, 17rem);
+	}
+}
+
+@media (max-width: 620px) {
+	.pagina-inicial {
+		padding-block: 1.3rem 1.8rem;
+	}
+
+	.subtitulo-pagina {
+		letter-spacing: 0.13em;
+	}
+
+	.texto-pagina {
+		font-size: 1.2rem;
+	}
+
+	.acoes-apresentacao {
+		display: grid;
+		grid-template-columns: 1fr;
+	}
+
+	.botao-padrao {
+		width: 100%;
+	}
+
+	.bloco-visual {
+		--garrafa-x: 58%;
+		--garrafa-y: -40%;
+		--garrafa-w: clamp(8.8rem, 37vw, 13.8rem);
+	}
+}
