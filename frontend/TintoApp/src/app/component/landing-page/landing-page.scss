@@ -65,11 +65,26 @@
 }
 
 .cartao-imagem {
+	position: relative;
+	overflow: hidden;
 	border-radius: var(--borda-arredondada-grande);
 	box-shadow: var(--sombra-padrao);
 	background-color: #2f0717;
 	background-size: cover;
 	background-position: center;
+	transform: translateZ(0);
+	transition: transform 320ms ease, box-shadow 320ms ease, filter 320ms ease;
+}
+
+.cartao-imagem::after {
+	content: '';
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(120deg, rgb(255 255 255 / 0%) 20%, rgb(255 255 255 / 18%) 45%, rgb(255 255 255 / 0%) 72%);
+	opacity: 0;
+	transform: translateX(-35%);
+	transition: opacity 280ms ease, transform 420ms ease;
+	pointer-events: none;
 }
 
 .cartao-imagem--superior {
@@ -101,8 +116,47 @@
 	background-size: contain;
 	background-repeat: no-repeat;
 	background-position: center top;
+	transition: transform 360ms cubic-bezier(0.22, 1, 0.36, 1), filter 360ms ease;
 	pointer-events: none;
 	z-index: 2;
+}
+
+@media (hover: hover) and (pointer: fine) {
+	.bloco-visual:hover .cartao-imagem,
+	.bloco-visual:focus-within .cartao-imagem {
+		box-shadow: 0 18px 40px rgb(18 3 10 / 46%);
+		filter: saturate(1.06) brightness(1.04);
+	}
+
+	.bloco-visual:hover .cartao-imagem::after,
+	.bloco-visual:focus-within .cartao-imagem::after {
+		opacity: 1;
+		transform: translateX(0);
+	}
+
+	.bloco-visual:hover .cartao-imagem--superior,
+	.bloco-visual:focus-within .cartao-imagem--superior {
+		transform: translateX(-0.2rem) scale(1.015);
+	}
+
+	.bloco-visual:hover .cartao-imagem--inferior,
+	.bloco-visual:focus-within .cartao-imagem--inferior {
+		transform: translateX(0.2rem) scale(1.02);
+	}
+
+	.bloco-visual:hover .garrafa-destaque,
+	.bloco-visual:focus-within .garrafa-destaque {
+		transform: translate(-50%, calc(var(--garrafa-y) - 0.35rem)) rotate(-1.8deg) scale(1.03);
+		filter: drop-shadow(0 10px 18px rgb(14 2 8 / 30%));
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.cartao-imagem,
+	.cartao-imagem::after,
+	.garrafa-destaque {
+		transition: none;
+	}
 }
 
 @media (max-width: 920px) {
