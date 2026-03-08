@@ -44,8 +44,8 @@ public class UsuarioService {
             throw new IllegalArgumentException("Senha atual incorreta");
         }
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String nome = authentication.getName();
-        Usuario usuario = usuarioRepository.findbyNome(nome).orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado"));
+        String email = authentication.getName();
+        Usuario usuario = usuarioRepository.findByEmail(email).orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado"));
         usuario.setNome(novoNome);
         return usuarioRepository.save(usuario);
     }

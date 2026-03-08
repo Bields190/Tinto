@@ -25,14 +25,24 @@ public class AuthService {
         Optional<Usuario> usuarioOpt = usuarioRepository.findByEmail(email);
 
         if (usuarioOpt.isPresent() && passwordEncoder.matches(senha, usuarioOpt.get().getSenha())) {
-            // Gera o Token JWT
-            return Jwts.builder()
-                    .setSubject(usuarioOpt.get().getEmail())
-                    .setIssuedAt(new Date())
-                    .setExpiration(new Date(System.currentTimeMillis() + 86400000)) // 1 dia
-                    .signWith(SignatureAlgorithm.HS512, SECRET_KEY)
-                    .compact();
+            // Gera o Token JWT com informações do usuário
+            return generateToken(usuarioOpt.get());
         }
         throw new RuntimeException("Credenciais inválidas");
+    }
+
+    /**
+     * Cria um token JWT para o usuário fornecido. O token inclui o email como subject
+     * e adiciona outros dados que possam ser relevantes, como o nome do usuário.
+     * Isso permite que, ao alterar um desses dados, um novo token seja reemitido.
+     */
+    public String generateToken(Usuario usuario) {
+        return Jwts.builder()
+                .setSubject(usuario.getEmail())
+                .claim("nome", usuario.getNome())
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + 86400000)) // 1 dia
+                .signWith(SignatureAlgorithm.HS512, SECRET_KEY)
+                .compact();
     }
 }
