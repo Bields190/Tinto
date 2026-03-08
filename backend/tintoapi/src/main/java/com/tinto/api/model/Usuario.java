@@ -14,7 +14,7 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String nome; // Nome completo do utilizador 
 
     @Column(nullable = false, unique = true)
