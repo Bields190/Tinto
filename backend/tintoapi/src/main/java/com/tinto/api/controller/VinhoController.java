@@ -5,6 +5,7 @@ import com.tinto.api.model.Usuario;
 import com.tinto.api.model.Vinho;
 import com.tinto.api.repository.FotoVinhoRepository;
 import com.tinto.api.repository.UsuarioRepository;
+import com.tinto.api.repository.VinhoRepository;
 import com.tinto.api.service.FileStorageService;
 import com.tinto.api.service.VinhoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -32,6 +34,28 @@ public class VinhoController {
 
     @Autowired
     private FotoVinhoRepository fotoVinhoRepository;
+
+    @Autowired
+    private VinhoRepository vinhoRepository;
+
+    @GetMapping("/buscar")
+    public ResponseEntity<List<Vinho>> filtrarVinhos(
+            @RequestParam(required = false) String termo,
+            @RequestParam(required = false) Integer safra,
+            @RequestParam(required = false) Double teorAlcoolico,
+            @RequestParam(required = false) LocalDate dataConsumo,
+            @RequestParam(required = false) Integer avaliacao,
+            @RequestParam(required = false) Boolean isFavorito,
+            @AuthenticationPrincipal UserDetails userDetails) {
+
+        Usuario usuario = usuarioRepository.findByEmail(userDetails.getUsername())
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+
+        List<Vinho> resultados = vinhoRepository.buscarComFiltros(
+                usuario.getId(), termo, safra, teorAlcoolico, dataConsumo, avaliacao, isFavorito);
+
+        return ResponseEntity.ok(resultados);
+    }
 
     @PostMapping("/registrar")
     public ResponseEntity<Vinho> registrarVinho(@RequestBody Vinho vinho,
@@ -64,10 +88,10 @@ public class VinhoController {
         return new ResponseEntity<>(vinhos, HttpStatus.OK);
     }
 
-    @PostMapping("/{id}/upload-fotos") 
+    @PostMapping("/{id}/upload-fotos")
     public ResponseEntity<?> uploadFotos(
             @PathVariable Long id,
-            @RequestParam("fotos") MultipartFile[] fotos, 
+            @RequestParam("fotos") MultipartFile[] fotos,
             @AuthenticationPrincipal UserDetails userDetails) {
 
         Vinho vinho = vinhoService.buscarPorId(id);
@@ -117,6 +141,7 @@ public class VinhoController {
         vinhoExistente.setNome(vinhoDadosNovos.getNome());
         vinhoExistente.setVinicola(vinhoDadosNovos.getVinicola());
         vinhoExistente.setSafra(vinhoDadosNovos.getSafra());
+        vinhoExistente.setPais(vinhoDadosNovos.getPais());
         vinhoExistente.setTeorAlcoolico(vinhoDadosNovos.getTeorAlcoolico());
         vinhoExistente.setTipoUva(vinhoDadosNovos.getTipoUva());
         vinhoExistente.setComentario(vinhoDadosNovos.getComentario());
