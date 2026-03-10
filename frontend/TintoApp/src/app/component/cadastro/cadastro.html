@@ -1,0 +1,75 @@
+<section class="cadastro-container">
+  <div class="logo-tinto">
+    <img src="assets/img/Tinto - Areia.png" alt="Logo Tinto">
+  </div>
+
+  <div class="forms">
+    <h1 class="titulo-forms">CADASTRO</h1>
+
+    <form class="forms-itens">
+
+      <div class="campo-grupo">
+        <label for="nome" class="label-campo">Nome</label>
+        <input
+          id="nome"
+          type="text"
+          class="input-padrao"
+          placeholder="Digite seu nome..."
+          required
+        />
+      </div>
+
+      <div class="campo-grupo">
+        <label for="dataNascimento" class="label-campo">Data de Nascimento</label>
+        <input
+          id="dataNascimento"
+          type="date"
+          class="input-padrao"
+          required
+        />
+      </div>
+
+      <div class="campo-grupo">
+        <label for="email" class="label-campo">Email</label>
+        <input
+          id="email"
+          type="email"
+          class="input-padrao"
+          placeholder="Digite seu email..."
+          required
+        />
+      </div>
+
+      <div class="campo-grupo">
+        <label for="senha" class="label-campo">Senha</label>
+        <input
+          id="senha"
+          type="password"
+          class="input-padrao"
+          placeholder="Digite sua senha..."
+          required
+        />
+      </div>
+
+      <div class="campo-grupo">
+        <label for="confirmarSenha" class="label-campo">Confirme sua senha</label>
+        <input
+          id="confirmarSenha"
+          type="password"
+          class="input-padrao"
+          placeholder="Confirme sua senha..."
+          required
+        />
+      </div>
+
+      <button type="submit" class="botao-padrao botao-cadastrar">
+        CADASTRE-SE
+      </button>
+
+      <div class="texto-login">
+        <span>Já possui cadastro? </span>
+        <a href="/login" class="link-login">Faça seu Log-In</a>
+      </div>
+    </form>
+  </div>
+</section>

@@ -65,9 +65,9 @@ img {
   min-width: 10.5rem;
   padding: 0.85rem 1.7rem;
   border-radius: 0.9rem;
-  border: 1px solid transparent;
+  border: 3px solid transparent;
   background-color: var(--cor-creme);
-  color: var(--cor-vinho-escuro);
+  color: #6B1439;
   font-family: var(--fonte-corpo);
   font-size: 1.75rem;
   font-weight: 700;
@@ -78,24 +78,10 @@ img {
 }
 
 .botao-padrao:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 22px rgb(32 7 19 / 32%);
-  filter: brightness(1.02);
-}
-
-.botao-padrao:active {
-  transform: translateY(0);
-}
-
-.botao-padrao:focus-visible {
-  outline: 2px solid var(--cor-creme);
-  outline-offset: 2px;
-}
-
-.botao-padrao--contorno {
-  background: transparent;
-  border-color: var(--cor-creme);
+  background-color: #9A3957;
   color: var(--cor-creme);
+  border: 3px solid var(--cor-creme);
+  transition: none;
 }
 
 .titulo-pagina {

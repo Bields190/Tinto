@@ -1,0 +1,227 @@
+
+.cadastro-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.logo-tinto {
+  width: 100%;
+  max-width: 150px;
+  margin-top: 2rem;
+
+  img {
+    width: 100%;
+    height: auto;
+  }
+}
+
+.forms {
+  width: 100%;
+  max-width: 650px;
+  background: #9A3957;
+  
+  border-radius: var(--borda-arredondada-grande);
+  padding: 1.25rem 1.25rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(246, 221, 196, 0.1);
+}
+
+.titulo-forms {
+  font-family: var(--fonte-corpo);
+  font-size: clamp(1rem, 5vw, 2rem);
+  font-weight: 500;
+  letter-spacing: 0.09em;
+  text-align: center;
+  color: var(--cor-creme);
+  margin: 0 0 1rem 0;
+}
+
+.forms-itens {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+
+  .campo-grupo:nth-child(n+3) {
+    grid-column: 1 / -1;
+  }
+}
+
+.campo-grupo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.label-campo {
+  font-family: var(--fonte-corpo);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--cor-creme);
+  letter-spacing: 0.02em;
+}
+
+.input-padrao {
+  padding: 1rem 1.2rem;
+  border-radius: var(--borda-arredondada-media);
+  border: 2px solid #772D44;
+  background-color: #84334C;
+  color: var(--cor-texto-claro);
+  font-family: var(--fonte-corpo);
+  font-size: 1rem;
+  font-weight: 500;
+  transition: all 200ms ease;
+  backdrop-filter: blur(5px);
+
+  &::placeholder {
+    color: #C18885;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: var(--cor-creme);
+    background-color: #66273b;
+  }
+
+  &:hover:not(:focus) {
+    border-color: var(--cor-creme);
+  }
+
+  &[type='date'] {
+    color-scheme: light;
+
+    &::-webkit-calendar-picker-indicator {
+      filter: invert(1) brightness(1.2);
+      cursor: pointer;
+    }
+  }
+}
+
+.input-padrao:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.mensagem-erro {
+  font-family: var(--fonte-corpo);
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #ff6b6b;
+  letter-spacing: 0.01em;
+  margin-top: -0.3rem;
+  animation: slideDown 200ms ease;
+}
+
+.botao-cadastrar {
+  margin-top: 0.75rem;
+  margin-bottom: 1rem;
+  width: 100%;
+  min-width: unset;
+  padding: 0.75rem 0.75rem;
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: all 200ms ease;
+  grid-column: 1 / -1;
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+.texto-login {
+  text-align: center;
+  font-family: var(--fonte-corpo);
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--cor-texto-suave);
+  letter-spacing: 0.01em;
+  grid-column: 1 / -1;
+
+  .link-login {
+    color: var(--cor-creme);
+    text-decoration: underline;
+    font-weight: 600;
+    transition: all 180ms ease;
+
+    &:hover {
+      color: var(--cor-creme-escuro);
+      text-decoration-thickness: 2px;
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--cor-creme);
+      outline-offset: 2px;
+      border-radius: 0.25rem;
+    }
+  }
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .formulario-wrapper {
+    padding: 2rem 1.5rem;
+    margin-inline: auto;
+    width: calc(100% - 1rem);
+  }
+
+  .titulo-formulario {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .input-padrao {
+    font-size: 16px; /* Previne zoom em iOS */
+    padding: 0.9rem 1rem;
+  }
+
+  .botao-cadastrar {
+    padding: 0.9rem 1.5rem;
+    font-size: 1.3rem;
+  }
+
+  .campo-grupo {
+    gap: 0.4rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .cadastro-container {
+    gap: 1.5rem;
+  }
+
+  .formulario-wrapper {
+    border-radius: 1.2rem;
+    padding: 1.5rem 1rem;
+    max-width: 100%;
+  }
+
+  .titulo-formulario {
+    font-size: 1.5rem;
+  }
+
+  .label-campo {
+    font-size: 0.85rem;
+  }
+
+  .input-padrao {
+    padding: 0.85rem 0.9rem;
+    font-size: 16px;
+  }
+
+  .botao-cadastrar {
+    padding: 0.85rem 1.2rem;
+    font-size: 1.1rem;
+  }
+
+  .mensagem-erro {
+    font-size: 0.8rem;
+  }
+
+  .texto-login {
+    font-size: 0.85rem;
+  }
+}
