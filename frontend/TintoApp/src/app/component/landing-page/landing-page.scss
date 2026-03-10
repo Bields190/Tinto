@@ -4,7 +4,18 @@
 
 .pagina-inicial {
 	display: grid;
-	align-items: center;
+	align-content: start;
+	gap: clamp(1.2rem, 2.2vw, 2rem);
+	min-height: 100dvh;
+	box-sizing: border-box;
+	overflow-x: clip;
+}
+
+.cabecalho-topo {
+	display: grid;
+	justify-items: center;
+	gap: 0.8rem;
+	padding-top: 0.4rem;
 }
 
 .painel-inicial {
@@ -17,11 +28,6 @@
 .bloco-apresentacao {
 	display: grid;
 	gap: clamp(1rem, 2.2vw, 1.8rem);
-}
-
-.cabecalho-apresentacao {
-	display: grid;
-	gap: 1rem;
 }
 
 .titulo-acessivel {
@@ -37,11 +43,15 @@
 }
 
 .logo-marca {
-	width: min(100%, clamp(15rem, 46vw, 31rem));
+	width: min(100%, clamp(14rem, 30vw, 30rem));
 }
 
 .subtitulo-pagina {
 	color: var(--cor-texto-claro);
+	white-space: nowrap;
+	max-width: 100%;
+	font-size: clamp(0.95rem, 2.1vw, 1.85rem);
+	letter-spacing: 0.12em;
 }
 
 .descricao-apresentacao {
@@ -55,13 +65,14 @@
 }
 
 .bloco-visual {
+  align-items: end;
 	display: grid;
-	gap: 0.9rem;
 	min-height: clamp(22rem, 54vw, 33rem);
 	padding-block: 1.5rem;
 	--garrafa-x: 55%;
 	--garrafa-y: -43%;
 	--garrafa-w: clamp(11.2rem, 24vw, 19.5rem);
+  border-bottom: 0;
 }
 
 .cartao-imagem {
@@ -183,7 +194,8 @@
 	}
 
 	.subtitulo-pagina {
-		letter-spacing: 0.13em;
+		letter-spacing: 0.09em;
+		font-size: clamp(0.8rem, 3vw, 1rem);
 	}
 
 	.texto-pagina {
