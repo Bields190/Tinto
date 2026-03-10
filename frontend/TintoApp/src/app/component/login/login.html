@@ -1,0 +1,39 @@
+<main class="pagina pagina-login" aria-labelledby="titulo-login">
+	<header class="cabecalho-topo">
+		<h1 id="titulo-login" class="titulo-acessivel">Login Tinto</h1>
+		<img class="logo-marca" src="/assets/img/Tinto - Areia.png" alt="Tinto" />
+	</header>
+
+	<section class="painel-login" aria-label="Acesso a conta">
+		<h2 class="titulo-painel">Log In</h2>
+
+		<form class="form-login" novalidate>
+			<label class="campo-acessivel" for="email">E-mail</label>
+			<input
+				id="email"
+				type="email"
+				name="email"
+				autocomplete="email"
+				placeholder="Digite seu e-mail..."
+			/>
+
+			<label class="campo-acessivel" for="senha">Senha</label>
+			<input
+				id="senha"
+				type="password"
+				name="senha"
+				autocomplete="current-password"
+				placeholder="Digite sua senha..."
+			/>
+
+			<a class="link-form" href="#">Esqueci minha senha</a>
+
+			<button class="botao-padrao botao-entrar" type="submit">Entrar</button>
+		</form>
+
+		<p class="rodape-login">
+			Não possui cadastro ainda?
+			<a class="link-form" href="/cadastro">Clique aqui!</a>
+		</p>
+	</section>
+</main>
