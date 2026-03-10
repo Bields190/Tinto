@@ -1,39 +1,41 @@
-<main class="pagina pagina-login" aria-labelledby="titulo-login">
-	<header class="cabecalho-topo">
-		<h1 id="titulo-login" class="titulo-acessivel">Login Tinto</h1>
-		<img class="logo-marca" src="/assets/img/Tinto - Areia.png" alt="Tinto" />
-	</header>
+<section class="login-container">
+  <div class="logo-tinto">
+    <img src="assets/img/Tinto - Areia.png" alt="Logo Tinto">
+  </div>
 
-	<section class="painel-login" aria-label="Acesso a conta">
-		<h2 class="titulo-painel">Log In</h2>
+	<div class="forms">
+		<h1 class="titulo-forms">LOG IN</h1>
 
-		<form class="form-login" novalidate>
-			<label class="campo-acessivel" for="email">E-mail</label>
-			<input
-				id="email"
-				type="email"
-				name="email"
-				autocomplete="email"
-				placeholder="Digite seu e-mail..."
-			/>
+		<form class="forms-itens">
+			<div class="campo-grupo">
+        		<label for="email" class="label-campo">Email</label>
+        		<input
+          			id="email"
+          			type="email"
+          			class="input-padrao"
+          			placeholder="Digite seu email..."
+          			required
+       			/>
+      		</div>
 
-			<label class="campo-acessivel" for="senha">Senha</label>
-			<input
-				id="senha"
-				type="password"
-				name="senha"
-				autocomplete="current-password"
-				placeholder="Digite sua senha..."
-			/>
+      		<div class="campo-grupo">
+				<label for="senha" class="label-campo">Senha</label>
+				<input
+					id="senha"
+					type="password"
+					class="input-padrao"
+					placeholder="Digite sua senha..."
+					required
+				/>
+      		</div>
 
-			<a class="link-form" href="#">Esqueci minha senha</a>
+			<a class="esqueci-senha" href="#">Esqueci minha senha</a>
 
-			<button class="botao-padrao botao-entrar" type="submit">Entrar</button>
+			<button type="submit" class="botao-padrao botao-cadastrar">ENTRE</button>
 		</form>
 
-		<p class="rodape-login">
-			Não possui cadastro ainda?
-			<a class="link-form" href="/cadastro">Clique aqui!</a>
-		</p>
-	</section>
-</main>
+		<div class="texto-login">
+        	<a href="/cadastro" class="link-login">Já possui cadastro? Faça seu Log-In</a>
+      	</div>
+	</div>
+</section>
