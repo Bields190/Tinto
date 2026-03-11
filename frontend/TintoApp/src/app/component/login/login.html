@@ -3,39 +3,39 @@
     <img src="assets/img/Tinto - Areia.png" alt="Logo Tinto">
   </div>
 
-	<div class="forms">
-		<h1 class="titulo-forms">LOG IN</h1>
+  <div class="forms">
+    <h1 class="titulo-forms">LOG IN</h1>
 
-		<form class="forms-itens">
-			<div class="campo-grupo">
-        		<label for="email" class="label-campo">Email</label>
-        		<input
-          			id="email"
-          			type="email"
-          			class="input-padrao"
-          			placeholder="Digite seu email..."
-          			required
-       			/>
-      		</div>
+    <form class="forms-itens" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <div class="campo-grupo">
+        <label for="email" class="label-campo">Email</label>
+        <input
+          id="email"
+          type="email"
+          formControlName="email"
+          class="input-padrao"
+          placeholder="Digite seu email..."
+        />
+      </div>
 
-      		<div class="campo-grupo">
-				<label for="senha" class="label-campo">Senha</label>
-				<input
-					id="senha"
-					type="password"
-					class="input-padrao"
-					placeholder="Digite sua senha..."
-					required
-				/>
-      		</div>
+      <div class="campo-grupo">
+        <label for="senha" class="label-campo">Senha</label>
+        <input
+          id="senha"
+          type="password"
+          formControlName="senha"
+          class="input-padrao"
+          placeholder="Digite sua senha..."
+        />
+      </div>
 
-			<a class="esqueci-senha" href="#">Esqueci minha senha</a>
+      <a class="esqueci-senha" href="#">Esqueci minha senha</a>
 
-			<button type="submit" class="botao-padrao botao-cadastrar">ENTRE</button>
-		</form>
+      <button type="submit" [disabled]="loginForm.invalid" class="botao-padrao botao-cadastrar">ENTRE</button>
+    </form>
 
-		<div class="texto-login">
-        	<a href="/cadastro" class="link-login">Já possui cadastro? Faça seu Log-In</a>
-      	</div>
-	</div>
+    <div class="texto-login">
+      <a routerLink="/cadastro" class="link-login">Não possui cadastro? Cadastre-se</a>
+    </div>
+  </div>
 </section>

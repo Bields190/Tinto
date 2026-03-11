@@ -1,21 +1,20 @@
 <section class="cadastro-container">
   <div class="logo-tinto">
-    <img src="assets/img/Tinto - Areia.png" alt="Logo Tinto">
+    <img src="assets/img/Tinto - Areia.png" alt="Logo Tinto" />
   </div>
 
   <div class="forms">
     <h1 class="titulo-forms">CADASTRO</h1>
 
-    <form class="forms-itens">
-
+    <form class="forms-itens" [formGroup]="cadastroForm" (ngSubmit)="onSubmit()">
       <div class="campo-grupo">
         <label for="nome" class="label-campo">Nome</label>
         <input
           id="nome"
           type="text"
+          formControlName="nome"
           class="input-padrao"
           placeholder="Digite seu nome..."
-          required
         />
       </div>
 
@@ -24,8 +23,8 @@
         <input
           id="dataNascimento"
           type="date"
+          formControlName="dataNascimento"
           class="input-padrao"
-          required
         />
       </div>
 
@@ -34,9 +33,9 @@
         <input
           id="email"
           type="email"
+          formControlName="email"
           class="input-padrao"
           placeholder="Digite seu email..."
-          required
         />
       </div>
 
@@ -45,9 +44,9 @@
         <input
           id="senha"
           type="password"
+          formControlName="senha"
           class="input-padrao"
           placeholder="Digite sua senha..."
-          required
         />
       </div>
 
@@ -56,18 +55,24 @@
         <input
           id="confirmarSenha"
           type="password"
+          formControlName="confirmarSenha"
           class="input-padrao"
           placeholder="Confirme sua senha..."
-          required
         />
+        <span
+          *ngIf="cadastroForm.hasError('mismatch') && cadastroForm.get('confirmarSenha')?.touched"
+          style="color: rgb(255, 255, 255); font-size: 12px"
+        >
+          As senhas não coincidem.
+        </span>
       </div>
 
-      <button type="submit" class="botao-padrao botao-cadastrar">
+      <button type="submit" class="botao-padrao botao-cadastrar" [disabled]="cadastroForm.invalid">
         CADASTRE-SE
       </button>
 
       <div class="texto-login">
-        <a href="/login" class="link-login">Já possui cadastro? Faça seu Log-In</a>
+        <a routerLink="/login" class="link-login">Já possui cadastro? Faça seu Log-In</a>
       </div>
     </form>
   </div>

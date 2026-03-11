@@ -10,6 +10,7 @@
     "serve:ssr:TintoApp": "node dist/TintoApp/server/server.mjs"
   },
   "private": true,
+  "type": "module",
   "packageManager": "npm@11.11.0",
   "dependencies": {
     "@angular/common": "^21.2.0",
