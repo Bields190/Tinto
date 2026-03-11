@@ -1,5 +1,6 @@
 package com.tinto.api.controller;
 
+import com.tinto.api.dto.VinhoDTO;
 import com.tinto.api.model.FotoVinho;
 import com.tinto.api.model.Usuario;
 import com.tinto.api.model.Vinho;
@@ -192,5 +193,14 @@ public class VinhoController {
         vinhoService.deletarVinho(vinho);
 
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/grid")
+    public ResponseEntity<List<VinhoDTO>> listarParaGrid(@AuthenticationPrincipal UserDetails userDetails) {
+        Usuario usuario = usuarioRepository.findByEmail(userDetails.getUsername())
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+
+        List<VinhoDTO> vinhosGrid = vinhoService.buscarVinhosComCapa(usuario.getId());
+        return ResponseEntity.ok(vinhosGrid);
     }
 }

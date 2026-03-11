@@ -34,6 +34,15 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws ServletException, IOException {
 
+        String requestURI = request.getRequestURI();
+        String path = request.getRequestURI().substring(request.getContextPath().length());
+
+        // Se o caminho começar com /uploads, pula o filtro JWT na hora
+        if (path.startsWith("/uploads")) {
+            chain.doFilter(request, response);
+            return;
+        }
+
         final String authorizationHeader = request.getHeader("Authorization");
 
         String username = null;
@@ -52,7 +61,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                 // Importante: Passamos o objeto userDetails completo aqui
                 UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
                         userDetails, null, userDetails.getAuthorities());
-                
+
                 authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
             }

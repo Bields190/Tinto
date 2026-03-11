@@ -29,6 +29,7 @@ public class SecurityConfig {
             .csrf(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/api/usuarios/cadastrar", "/api/auth/login").permitAll()
+                .requestMatchers("/uploads/**").permitAll()  
                 .anyRequest().authenticated()
             )
             .sessionManagement(session -> session

@@ -1,5 +1,6 @@
 package com.tinto.api.service;
 
+import com.tinto.api.dto.VinhoDTO;
 import com.tinto.api.model.FotoVinho;
 import com.tinto.api.model.Vinho;
 import com.tinto.api.repository.VinhoRepository;
@@ -10,6 +11,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class VinhoService {
@@ -26,7 +28,7 @@ public class VinhoService {
     }
 
     public Vinho buscarPorId(Long id) {
-    return vinhoRepository.findById(id).orElseThrow(() -> new RuntimeException("Vinho não encontrado"));
+        return vinhoRepository.findById(id).orElseThrow(() -> new RuntimeException("Vinho não encontrado"));
     }
 
     public void deletarVinho(Vinho vinho) {
@@ -43,5 +45,13 @@ public class VinhoService {
         }
         // Apagar do banco de dados
         vinhoRepository.delete(vinho);
+    }
+
+    public List<VinhoDTO> buscarVinhosComCapa(Long usuarioId) {
+        List<Vinho> vinhos = vinhoRepository.findByUsuarioIdWithFotos(usuarioId);
+
+        return vinhos.stream()
+                .map(VinhoDTO::new)
+                .collect(Collectors.toList());
     }
 }
