@@ -1,0 +1,79 @@
+<section class="cadastro-container">
+  <div class="logo-tinto">
+    <img src="assets/img/Tinto - Areia.png" alt="Logo Tinto" />
+  </div>
+
+  <div class="forms">
+    <h1 class="titulo-forms">PERFIL</h1>
+
+    <form [formGroup]="perfilForm" class="forms-itens">
+      <div class="campo-grupo">
+        <label for="nome" class="label-campo">Nome</label>
+        <input
+          id="nome"
+          type="text"
+          formControlName="nome"
+          class="input-padrao"
+          placeholder="Khalil Brito"
+        />
+      </div>
+
+      <div class="campo-grupo">
+        <label for="email" class="label-campo">Email</label>
+        <input
+          id="email"
+          type="email"
+          formControlName="email"
+          class="input-padrao"
+          placeholder="khalildbrito@gmail.com"
+        />
+      </div>
+
+      <div class="campo-grupo">
+        <label for="senha" class="label-campo">Senha</label>
+        <input
+          id="senha"
+          type="password"
+          formControlName="senha"
+          class="input-padrao"
+          placeholder="if i tell my secret, promise you'll keep it"
+        />
+      </div>
+
+      <div class="campo-grupo">
+        <label for="dataNascimento" class="label-campo">Data de Nascimento</label>
+        <input
+          id="dataNascimento"
+          type="date"
+          formControlName="dataNascimento"
+          class="input-padrao"
+        />
+      </div>
+
+      <div class="botoes-grupo">
+        <button
+          *ngIf="!modoEdicao"
+          type="button"
+          (click)="habilitarEdicao()"
+          class="botao-padrao botao-cadastrar"
+        >
+          EDITAR
+        </button>
+        <button
+          *ngIf="modoEdicao"
+          type="button"
+          (click)="salvarEdicao()"
+          class="botao-padrao botao-cadastrar"
+        >
+          SALVAR
+        </button>
+        <button          *ngIf="!modoEdicao"          type="button"
+          (click)="voltar()"
+          class="botao-padrao botao-cadastrar"
+        >
+          VOLTAR
+        </button>
+      </div>
+    </form>
+  </div>
+</section>
