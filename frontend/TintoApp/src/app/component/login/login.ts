@@ -32,7 +32,7 @@ export class Login {
       this.authService.login(email, senha).subscribe({
         next: (token) => {
           console.log('Login realizado! Token salvo.');
-          this.router.navigate(['/vinhos']); // Redireciona para a sua grid
+          this.router.navigate(['/adega']);
         },
         error: (err) => {
           console.error('Erro no login', err);

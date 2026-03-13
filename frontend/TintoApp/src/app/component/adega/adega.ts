@@ -85,6 +85,10 @@ export class Adega {
     return vinho.id;
   }
 
+  protected abrirDetalhes(vinho: AdegaVinho): void {
+    this.router.navigate(['/vinhos', vinho.id]);
+  }
+
   protected limparBusca(): void {
     this.termoBusca.set('');
   }
