@@ -12,8 +12,7 @@ export const routes: Routes = [
   { path: 'cadastro', component: Cadastro },
   { path: 'login', component: Login },
   { path: 'perfil', component: Perfil },
-  { path: 'adicionar', component: Adicionar }
+  { path: 'adicionar', component: Adicionar },
   { path: 'perfil', component: Perfil },
-  { path: 'adega', component: Adega },
-
+  { path: 'adega', component: Adega }
 ];
