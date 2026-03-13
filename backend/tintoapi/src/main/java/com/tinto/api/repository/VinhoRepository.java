@@ -35,7 +35,7 @@ public interface VinhoRepository extends JpaRepository<Vinho, Long> {
                         @Param("avaliacao") Integer avaliacao,
                         @Param("isFavorito") Boolean isFavorito);
 
-        @Query("SELECT DISTINCT v FROM Vinho v LEFT JOIN FETCH v.fotos WHERE v.usuario.id = :usuarioId")
+        @Query("SELECT DISTINCT v FROM Vinho v WHERE v.usuario.id = :usuarioId")
         List<Vinho> findByUsuarioIdWithFotos(@Param("usuarioId") Long usuarioId);
 
 }

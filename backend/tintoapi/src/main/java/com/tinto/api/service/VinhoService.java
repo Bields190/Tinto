@@ -48,8 +48,10 @@ public class VinhoService {
     }
 
     public List<VinhoDTO> buscarVinhosComCapa(Long usuarioId) {
+        // Busca a lista distinta de vinhos do usuário
         List<Vinho> vinhos = vinhoRepository.findByUsuarioIdWithFotos(usuarioId);
 
+        // Converte para DTO
         return vinhos.stream()
                 .map(VinhoDTO::new)
                 .collect(Collectors.toList());

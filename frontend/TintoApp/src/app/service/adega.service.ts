@@ -7,7 +7,7 @@ export interface AdegaVinho {
   nome: string;
   pais: string | null;
   avaliacao: number | null;
-  fotoUrl?: string | null;
+  urlCapa?: string | null;
   isFavorito?: boolean | null;
 }
 
@@ -35,14 +35,25 @@ export class AdegaService {
   private readonly apiUrl = 'http://localhost:8080/api/vinhos';
 
   listarMeusVinhos(): Observable<AdegaVinho[]> {
-    return this.http.get<AdegaVinho[]>(`${this.apiUrl}/meus-vinhos`);
+    return this.http.get<AdegaVinho[]>(`${this.apiUrl}/grid`);
   }
 
   buscarVinhoPorId(id: number): Observable<VinhoDetalhe> {
-    return this.http.get<VinhoDetalhe>(`${this.apiUrl}/${id}`);
+  return this.http.get<VinhoDetalhe>(`${this.apiUrl}/${id}`);
+}
+
+ atualizarVinho(id: string, vinho: any): Observable<any> {
+  return this.http.put(`${this.apiUrl}/${id}`, vinho);
+}
+
+  registrarVinho(vinho: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/registrar`, vinho);
   }
 
-  atualizarVinho(id: number, vinho: VinhoDetalhe): Observable<VinhoDetalhe> {
-    return this.http.put<VinhoDetalhe>(`${this.apiUrl}/${id}`, vinho);
-  }
+  uploadFotos(vinhoId: number, files: File[]): Observable<any> {
+  const formData = new FormData();
+  files.forEach(file => formData.append('fotos', file));
+  
+  return this.http.post(`${this.apiUrl}/${vinhoId}/upload-fotos`, formData);
+}
 }

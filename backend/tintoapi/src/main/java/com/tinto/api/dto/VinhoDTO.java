@@ -8,18 +8,22 @@ public class VinhoDTO {
     private String pais;
     private Integer avaliacao; 
     private String urlCapa;
+    private Boolean isFavorito;
+    
 
     public VinhoDTO(Vinho vinho) {
         this.id = vinho.getId();
         this.nome = vinho.getNome();
         this.pais = vinho.getPais();
         this.avaliacao = vinho.getAvaliacao();
+        this.isFavorito = vinho.getIsFavorito();
 
         if (vinho.getFotos() != null && !vinho.getFotos().isEmpty()) {
-            this.urlCapa = "http://localhost:8080/api/fotos/exibir/" + vinho.getFotos().get(0).getArquivoPath();
-        } else {
-            this.urlCapa = null;
-        }
+        // FORÇAR o caminho para o seu controller de exibição
+        this.urlCapa = "http://localhost:8080/api/fotos/exibir/" + vinho.getFotos().get(0).getArquivoPath();
+    } else {
+        this.urlCapa = null;
+    }
     }
 
     // Getters
@@ -28,4 +32,5 @@ public class VinhoDTO {
     public String getPais() { return pais; }
     public Integer getAvaliacao() { return avaliacao; }
     public String getUrlCapa() { return urlCapa; }
+    public Boolean getIsFavorito() { return isFavorito; } 
 }

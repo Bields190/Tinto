@@ -38,7 +38,7 @@ export class DetalhesVinho {
       return fotosDoRegistro;
     }
 
-    return vinho.fotoUrl ? [vinho.fotoUrl] : [this.fallbackImage];
+    return vinho.urlCapa ? [vinho.urlCapa] : [this.fallbackImage];
   });
 
   protected readonly fotoAtual = computed(() => {
@@ -100,45 +100,38 @@ export class DetalhesVinho {
   }
 
   protected editarVinho(): void {
-    const vinho = this.vinho();
+  const vinho = this.vinho();
+  if (!vinho) return;
 
-    if (!vinho) {
-      return;
-    }
-
-    this.router.navigate(['/adicionar'], {
-      state: {
-        vinhoId: vinho.id,
-        vinho,
-        origem: 'detalhes-vinho',
-      },
-    });
-  }
+  // Navega para a rota de edição configurada nas rotas
+  this.router.navigate(['/editar', vinho.id]);
+}
 
   protected alternarFavorito(): void {
-    const vinhoAtual = this.vinho();
+  const vinhoAtual = this.vinho();
 
-    if (!vinhoAtual || this.salvandoFavorito()) {
-      return;
-    }
-
-    const vinhoAtualizado: VinhoDetalhe = {
-      ...vinhoAtual,
-      isFavorito: !vinhoAtual.isFavorito,
-    };
-
-    this.salvandoFavorito.set(true);
-
-    this.adegaService
-      .atualizarVinho(vinhoAtual.id, vinhoAtualizado)
-      .pipe(finalize(() => this.salvandoFavorito.set(false)))
-      .subscribe({
-        next: (vinho) => this.vinho.set(vinho),
-        error: () => {
-          this.vinho.set(vinhoAtual);
-        },
-      });
+  if (!vinhoAtual || this.salvandoFavorito()) {
+    return;
   }
+
+  const vinhoAtualizado: VinhoDetalhe = {
+    ...vinhoAtual,
+    isFavorito: !vinhoAtual.isFavorito,
+  };
+
+  this.salvandoFavorito.set(true);
+
+  // CONVERTA O ID PARA STRING AQUI:
+  this.adegaService
+    .atualizarVinho(vinhoAtual.id.toString(), vinhoAtualizado) 
+    .pipe(finalize(() => this.salvandoFavorito.set(false)))
+    .subscribe({
+      next: (vinho) => this.vinho.set(vinho),
+      error: () => {
+        this.vinho.set(vinhoAtual);
+      },
+    });
+}
 
   protected fotoAnterior(): void {
     const total = this.fotos().length;
@@ -203,7 +196,7 @@ export class DetalhesVinho {
       return null;
     }
 
-    return `http://localhost:8080/uploads/${arquivoPath}`;
+    return `http://localhost:8080/api/fotos/exibir/${arquivoPath}`;
   }
 
   private formatarTeorAlcoolico(teor: number | null | undefined): string {

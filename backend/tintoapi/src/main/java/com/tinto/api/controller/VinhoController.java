@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -118,7 +119,7 @@ public class VinhoController {
             }
         }
 
-        return ResponseEntity.ok("Fotos adicionadas com sucesso!");
+        return ResponseEntity.ok(Collections.singletonMap("mensagem", "Fotos adicionadas com sucesso!"));
     }
 
     @PutMapping("/{id}")

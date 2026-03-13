@@ -9,78 +9,73 @@
 
       <form [formGroup]="form" class="forms-itens">
         <div class="campo-grupo">
-            <label for="nomeVinho" class="label-campo">Nome do Vinho:</label>
-            <input
+          <label for="nomeVinho" class="label-campo">Nome do Vinho:</label>
+          <input
             id="nomeVinho"
             type="text"
             formControlName="nomeVinho"
             class="input-padrao"
             placeholder="Digite o nome do vinho..."
-            />
+          />
         </div>
         <div class="campo-grupo">
-            <label for="vinicola" class="label-campo">Vinícola:</label>
-            <input
+          <label for="vinicola" class="label-campo">Vinícola:</label>
+          <input
             id="vinicola"
             type="text"
             formControlName="vinicola"
             class="input-padrao"
             placeholder="Digite a vinícola..."
-            />
+          />
         </div>
         <div class="campo-grupo">
-            <label for="uva" class="label-campo">Tipo de Uva:</label>
-            <input
+          <label for="uva" class="label-campo">Tipo de Uva:</label>
+          <input
             id="uva"
             type="text"
             formControlName="uva"
             class="input-padrao"
             placeholder="Digite o tipo de uva..."
-            />
+          />
         </div>
         <div class="campo-grupo">
-            <label for="pais" class="label-campo">País:</label>
-            <input
+          <label for="pais" class="label-campo">País:</label>
+          <input
             id="pais"
             type="text"
             formControlName="pais"
             class="input-padrao"
             placeholder="Digite o país de origem..."
-            />
+          />
         </div>
         <div class="campo-grupo">
-            <label for="teorAlcoolico" class="label-campo">Teor Alcoólico:</label>
-            <div class="slider-wrapper">
-              <input
-                id="teorAlcoolico"
-                type="range"
-                min="0"
-                max="35"
-                step="1"
-                formControlName="teorAlcoolico"
-                class="input-padrao"
-              />
-              <div class="slider-value">{{ form.get('teorAlcoolico')?.value }}%</div>
-            </div>
-        </div>
-        <div class="campo-grupo">
-            <label for="dataConsumo" class="label-campo">Data de Consumo:</label>
+          <label for="teorAlcoolico" class="label-campo">Teor Alcoólico:</label>
+          <div class="slider-wrapper">
             <input
-            id="dataConsumo"
-            type="date"
-            formControlName="dataConsumo"
-            class="input-padrao"
+              id="teorAlcoolico"
+              type="range"
+              min="0"
+              max="35"
+              step="1"
+              formControlName="teorAlcoolico"
+              class="input-padrao"
             />
+            <div class="slider-value">{{ form.get('teorAlcoolico')?.value }}%</div>
+          </div>
         </div>
         <div class="campo-grupo">
-            <label for="harmonizacao" class="label-campo">Harmonização:</label>
-            <input
+          <label for="dataConsumo" class="label-campo">Data de Consumo:</label>
+          <input id="dataConsumo" type="date" formControlName="dataConsumo" class="input-padrao" />
+        </div>
+        <div class="campo-grupo">
+          <label for="harmonizacao" class="label-campo">Harmonização:</label>
+          <input
             id="harmonizacao"
             type="text"
             formControlName="harmonizacao"
             class="input-padrao"
             placeholder="Digite o que harmoniza com o vinho..."
-            />
+          />
         </div>
       </form>
     </div>
@@ -141,11 +136,11 @@
         </div>
 
         <div class="botoes-grupo">
-          <button type="button" class="botao-padrao botao-cadastrar">
+          <button type="button" class="botao-padrao botao-cadastrar" (click)="salvarVinho()">
             SALVAR VINHO
           </button>
         </div>
       </form>
     </div>
-   </div>
+  </div>
 </section>

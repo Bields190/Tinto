@@ -65,9 +65,10 @@ export class Adega {
     this.somenteFavoritos.update((valorAtual) => !valorAtual);
   }
 
-  protected imagemDoVinho(vinho: AdegaVinho): string {
-    return vinho.fotoUrl || this.fallbackImage;
-  }
+ protected imagemDoVinho(vinho: AdegaVinho): string {
+  console.log('URL da foto do vinho:', vinho.urlCapa); 
+  return vinho.urlCapa || this.fallbackImage;
+}
 
   protected tratarErroImagem(evento: Event): void {
     const imagem = evento.target as HTMLImageElement;
@@ -115,4 +116,6 @@ export class Adega {
         this.vinhos.set(vinhos);
       });
   }
+
+  
 }

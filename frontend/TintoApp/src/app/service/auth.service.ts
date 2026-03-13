@@ -13,17 +13,17 @@ export class AuthService {
   cadastrar(usuario: any): Observable<any> {
     return this.http.post(`${this.API_URL}/usuarios/cadastrar`, usuario);
   }
-
-  // Novo método de login ajustado para o DTO
+  
   login(email: string, senha: string): Observable<string> {
-    // Enviamos { email, senha } como corpo da requisição
-    return this.http.post(`${this.API_URL}/auth/login`, { email, senha }, { responseType: 'text' })
-      .pipe(
-        tap(token => {
-          localStorage.setItem('token', token);
-        })
-      );
-  }
+  localStorage.removeItem('token'); 
+  
+  return this.http.post(`${this.API_URL}/auth/login`, { email, senha }, { responseType: 'text' })
+    .pipe(
+      tap(token => {
+        localStorage.setItem('token', token);
+      })
+    );
+}
 
   getToken(): string | null {
     return localStorage.getItem('token');
