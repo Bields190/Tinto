@@ -80,7 +80,15 @@
 	} @else {
 		<section class="grade-vinhos" aria-label="Vinhos da adega">
 			@for (vinho of vinhosFiltrados(); track trackByVinhoId($index, vinho)) {
-				<article class="cartao-vinho">
+				<article
+					class="cartao-vinho"
+					role="button"
+					tabindex="0"
+					(click)="abrirDetalhes(vinho)"
+					(keydown.enter)="abrirDetalhes(vinho)"
+					(keydown.space)="abrirDetalhes(vinho); $event.preventDefault()"
+					[attr.aria-label]="'Abrir detalhes de ' + vinho.nome"
+				>
 					<figure class="cartao-vinho__midia">
 						<img
 							[src]="imagemDoVinho(vinho)"

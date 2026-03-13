@@ -5,6 +5,7 @@ import { Login } from './component/login/login';
 import { Perfil } from './component/perfil/perfil';
 import { Adicionar } from './component/adicionar/adicionar';
 import { Adega } from './component/adega/adega';
+import { DetalhesVinho } from './component/detalhes-vinho/detalhes-vinho';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'inicio', pathMatch: 'full' },
@@ -14,5 +15,7 @@ export const routes: Routes = [
   { path: 'perfil', component: Perfil },
   { path: 'adicionar', component: Adicionar },
   { path: 'perfil', component: Perfil },
-  { path: 'adega', component: Adega }
+  { path: 'adega', component: Adega },
+  { path: 'vinhos/:id', component: DetalhesVinho },
+
 ];
