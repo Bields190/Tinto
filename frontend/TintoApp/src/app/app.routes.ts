@@ -3,6 +3,7 @@ import { LandingPage } from './component/landing-page/landing-page';
 import { Cadastro } from './component/cadastro/cadastro';
 import { Login } from './component/login/login';
 import { Perfil } from './component/perfil/perfil';
+import { Adicionar } from './component/adicionar/adicionar';
 import { Adega } from './component/adega/adega';
 
 export const routes: Routes = [
@@ -10,6 +11,8 @@ export const routes: Routes = [
   { path: 'inicio', component: LandingPage },
   { path: 'cadastro', component: Cadastro },
   { path: 'login', component: Login },
+  { path: 'perfil', component: Perfil },
+  { path: 'adicionar', component: Adicionar }
   { path: 'perfil', component: Perfil },
   { path: 'adega', component: Adega },
 
