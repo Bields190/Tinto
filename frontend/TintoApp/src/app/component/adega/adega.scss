@@ -1,0 +1,506 @@
+:host {
+	display: block;
+}
+
+.pagina-adega {
+	display: grid;
+	align-content: start;
+	gap: clamp(1.5rem, 3vw, 2.25rem);
+	min-height: 100dvh;
+	box-sizing: border-box;
+}
+
+.topo-adega {
+	display: grid;
+	grid-template-columns: auto 1fr auto;
+	align-items: center;
+	gap: 1rem;
+}
+
+.marca-adega {
+	justify-self: center;
+	width: min(100%, 10rem);
+
+	img {
+		width: 100%;
+		height: auto;
+	}
+}
+
+.atalho-perfil {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding: 0;
+	border: 0;
+	background: transparent;
+	color: var(--cor-creme);
+	text-decoration: none;
+	cursor: pointer;
+	transition: transform 180ms ease, filter 180ms ease, opacity 180ms ease;
+
+	&:hover,
+	&:focus-visible {
+		transform: translateY(-1px);
+		filter: brightness(1.08);
+		opacity: 1;
+	}
+
+	&:focus-visible {
+		outline: 2px solid var(--cor-creme);
+		outline-offset: 4px;
+		border-radius: 999px;
+	}
+}
+
+.atalho-perfil--avatar {
+	width: 2.6rem;
+	height: 2.6rem;
+	border-radius: 999px;
+	border: 2px solid currentColor;
+	background: rgb(246 221 196 / 6%);
+}
+
+.avatar-icone {
+	position: relative;
+	width: 1.2rem;
+	height: 1.2rem;
+
+	&::before,
+	&::after {
+		content: '';
+		position: absolute;
+		left: 50%;
+		transform: translateX(-50%);
+		border-radius: 999px;
+		background: currentColor;
+	}
+
+	&::before {
+		top: 0;
+		width: 0.7rem;
+		height: 0.7rem;
+	}
+
+	&::after {
+		bottom: 0;
+		width: 1.2rem;
+		height: 0.5rem;
+	}
+}
+
+.atalho-perfil--painel {
+	width: 1.9rem;
+	height: 2.3rem;
+	justify-self: end;
+}
+
+.perfil-icone {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	border: 2px solid currentColor;
+	border-bottom-width: 3px;
+	border-radius: 0.15rem;
+
+	&::before,
+	&::after {
+		content: '';
+		position: absolute;
+		background: currentColor;
+	}
+
+	&::before {
+		top: 50%;
+		left: -0.3rem;
+		width: 0.35rem;
+		height: 2px;
+		transform: translateY(-50%);
+	}
+
+	&::after {
+		top: 50%;
+		right: 0.28rem;
+		width: 0.18rem;
+		height: 0.18rem;
+		border-radius: 999px;
+		transform: translateY(-50%);
+	}
+}
+
+.barra-acoes {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) auto;
+	gap: 0.9rem;
+	align-items: center;
+}
+
+.campo-busca {
+	display: flex;
+	align-items: center;
+	gap: 0.8rem;
+	min-height: 4rem;
+	padding: 0 1.25rem;
+	border: 1px solid rgb(67 8 28 / 90%);
+	border-radius: 1rem;
+	background: linear-gradient(180deg, rgb(92 7 41 / 88%), rgb(86 6 38 / 84%));
+	box-shadow: inset 0 1px 0 rgb(255 255 255 / 7%), 0 14px 28px rgb(24 3 10 / 18%);
+
+	&:focus-within {
+		border-color: rgb(246 221 196 / 70%);
+		box-shadow: inset 0 1px 0 rgb(255 255 255 / 9%), 0 0 0 3px rgb(246 221 196 / 12%);
+	}
+
+	input {
+		width: 100%;
+		border: 0;
+		outline: 0;
+		background: transparent;
+		color: var(--cor-texto-claro);
+		font-family: var(--fonte-corpo);
+		font-size: 1.15rem;
+
+		&::placeholder {
+			color: rgb(243 213 189 / 72%);
+		}
+	}
+}
+
+.campo-busca__icone {
+	position: relative;
+	width: 1.25rem;
+	height: 1.25rem;
+	border: 2px solid var(--cor-creme);
+	border-radius: 999px;
+	flex: 0 0 auto;
+
+	&::after {
+		content: '';
+		position: absolute;
+		right: -0.35rem;
+		bottom: -0.35rem;
+		width: 0.55rem;
+		height: 2px;
+		background: var(--cor-creme);
+		transform: rotate(45deg);
+		transform-origin: right center;
+		border-radius: 999px;
+	}
+}
+
+.acoes-topo {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.65rem;
+	justify-content: flex-end;
+}
+
+.acao-expansivel {
+	box-sizing: border-box;
+	appearance: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	inline-size: 3.3rem;
+	min-inline-size: 3.3rem;
+	block-size: 3.3rem;
+	padding: 0 1rem;
+	border: 0;
+	border-radius: 1rem;
+	background: var(--cor-creme);
+	color: #8a1d4d;
+	font-family: var(--fonte-corpo);
+	font-size: 1rem;
+	font-weight: 700;
+	text-decoration: none;
+	cursor: pointer;
+	overflow: hidden;
+	transition: width 220ms ease, min-width 220ms ease, transform 180ms ease, box-shadow 180ms ease,
+		background-color 180ms ease, color 180ms ease;
+	box-shadow: 0 14px 28px rgb(24 3 10 / 18%);
+}
+
+.acao-expansivel__icone {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	position: relative;
+	width: 1.35rem;
+	height: 1.35rem;
+	flex: 0 0 auto;
+}
+
+.acao-expansivel__icone--mais::before,
+.acao-expansivel__icone--mais::after {
+	content: '';
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 0.9rem;
+	height: 2px;
+	border-radius: 999px;
+	background: currentColor;
+	transform: translate(-50%, -50%);
+}
+
+.acao-expansivel__icone--mais::after {
+	transform: translate(-50%, -50%) rotate(90deg);
+}
+
+.acao-expansivel__icone--estrela::before {
+	content: '';
+	width: 1rem;
+	height: 1rem;
+	background: currentColor;
+	clip-path: polygon(50% 0%, 62% 35%, 100% 35%, 69% 57%, 81% 100%, 50% 75%, 19% 100%, 31% 57%, 0% 35%, 38% 35%);
+}
+
+.acao-expansivel__texto {
+	max-width: 0;
+	overflow: hidden;
+	white-space: nowrap;
+	opacity: 0;
+	transform: translateX(-0.4rem);
+	transition: max-width 220ms ease, opacity 140ms ease, transform 220ms ease;
+}
+
+.acao-expansivel:hover,
+.acao-expansivel:focus-visible {
+	inline-size: 9.75rem;
+	min-inline-size: 9.75rem;
+	color: #6b1439;
+	transform: translateY(-1px);
+}
+
+.acao-expansivel:hover .acao-expansivel__texto,
+.acao-expansivel:focus-visible .acao-expansivel__texto {
+	max-width: 6rem;
+	opacity: 1;
+	transform: translateX(0);
+}
+
+.acao-expansivel--ativa {
+	background: #f0cfad;
+	color: #6b1439;
+}
+
+.acao-expansivel--ativa,
+.acao-expansivel--ativa:hover,
+.acao-expansivel--ativa:focus-visible {
+	inline-size: 3.3rem;
+	min-inline-size: 3.3rem;
+}
+
+.acao-expansivel--ativa .acao-expansivel__texto,
+.acao-expansivel--ativa:hover .acao-expansivel__texto,
+.acao-expansivel--ativa:focus-visible .acao-expansivel__texto {
+	max-width: 0;
+	opacity: 0;
+	transform: translateX(-0.4rem);
+}
+
+.estado-adega {
+	display: grid;
+	place-items: center;
+	min-height: 60dvh;
+	padding: clamp(2rem, 4vw, 3rem);
+	border: 1px solid rgb(246 221 196 / 32%);
+	border-radius: 1.8rem;
+	background: linear-gradient(145deg, rgb(112 12 54 / 42%), rgb(72 5 31 / 48%));
+	box-shadow: var(--sombra-padrao);
+	text-align: center;
+}
+
+.estado-adega__conteudo {
+	display: grid;
+	justify-items: center;
+	gap: 1rem;
+	max-width: 32rem;
+
+	img {
+		width: clamp(4.5rem, 12vw, 7rem);
+	}
+
+	h1 {
+		margin: 0;
+		font-family: var(--fonte-titulo);
+		font-size: clamp(2rem, 5vw, 3rem);
+		color: var(--cor-creme);
+	}
+
+	p {
+		margin: 0;
+		color: var(--cor-texto-suave);
+		font-size: 1.05rem;
+		line-height: 1.6;
+	}
+}
+
+.estado-adega--carregando,
+.estado-adega--erro {
+	min-height: 30dvh;
+
+	p,
+	h1 {
+		margin: 0;
+	}
+}
+
+.estado-adega__cta {
+	min-width: auto;
+	padding-inline: 1.4rem;
+	font-size: 1rem;
+	letter-spacing: 0.08em;
+}
+
+.grade-vinhos {
+	display: grid;
+	grid-template-columns: repeat(4, minmax(0, 1fr));
+	gap: clamp(1.2rem, 2vw, 2rem);
+}
+
+.cartao-vinho {
+	display: grid;
+	gap: 0.9rem;
+	padding: 1.15rem;
+	border: 1px solid rgb(246 221 196 / 78%);
+	border-radius: 1.35rem;
+	background: linear-gradient(to top, #260714 0%, #490c22 100%);
+	box-shadow: 0 14px 28px rgb(24 3 10 / 18%);
+	transition: transform 200ms ease, box-shadow 200ms ease, border-color 200ms ease;
+
+	&:hover {
+		transform: translateY(-3px);
+		border-color: var(--cor-creme);
+		box-shadow: 0 18px 34px rgb(24 3 10 / 26%);
+	}
+}
+
+.cartao-vinho__midia {
+	margin: 0;
+	aspect-ratio: 1 / 1;
+	overflow: hidden;
+	border-radius: 1rem;
+	background: linear-gradient(180deg, rgb(255 255 255 / 8%), rgb(255 255 255 / 2%));
+
+	img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+}
+
+.cartao-vinho__conteudo {
+	display: grid;
+	gap: 0.35rem;
+
+	h2 {
+		display: flex;
+		align-items: center;
+		gap: 0.35rem;
+		margin: 0;
+		font-family: var(--fonte-corpo);
+		font-size: 1.8rem;
+		font-weight: 600;
+		line-height: 1.15;
+		color: var(--cor-creme);
+	}
+
+	p {
+		margin: 0;
+		color: var(--cor-texto-suave);
+		font-size: 1.05rem;
+	}
+}
+
+.favorito-nome,
+.cartao-vinho__avaliacao {
+	color: #f7d49b;
+}
+
+.cartao-vinho__avaliacao {
+	display: flex;
+	gap: 0.2rem;
+	font-size: 1rem;
+}
+
+@media (max-width: 900px) {
+	.barra-acoes {
+		grid-template-columns: 1fr;
+	}
+
+	.acoes-topo {
+		justify-content: flex-start;
+	}
+
+	.grade-vinhos {
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+	}
+}
+
+@media (max-width: 640px) {
+	.pagina-adega {
+		gap: 1.2rem;
+	}
+
+	.topo-adega {
+		gap: 0.75rem;
+	}
+
+	.marca-adega {
+		width: min(100%, 8rem);
+	}
+
+	.campo-busca {
+		min-height: 3.5rem;
+		padding: 0 1rem;
+
+		input {
+			font-size: 1rem;
+		}
+	}
+
+	.acoes-topo {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+
+	.acao-expansivel,
+	.acao-expansivel:hover,
+	.acao-expansivel:focus-visible,
+	.acao-expansivel--ativa {
+		width: 100%;
+		min-width: 0;
+	}
+
+	.acao-expansivel__texto {
+		max-width: 6rem;
+		opacity: 1;
+		transform: translateX(0);
+	}
+
+	.grade-vinhos {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+
+	.cartao-vinho {
+		padding: 0.9rem;
+	}
+
+	.cartao-vinho__conteudo h2 {
+		font-size: 1.45rem;
+	}
+
+	.cartao-vinho__conteudo p {
+		font-size: 0.95rem;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.atalho-perfil,
+	.acao-expansivel,
+	.acao-expansivel__texto,
+	.cartao-vinho {
+		transition: none;
+	}
+}
