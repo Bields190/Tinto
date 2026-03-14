@@ -22,7 +22,7 @@ export class Adicionar {
   form: FormGroup;
   rating = 0;
   hoverRating = 0;
-  photos: PhotoSlot[] = Array.from({ length: 3 }, () => ({}));
+  photos: PhotoSlot[] = Array.from({ length: 4 }, () => ({}));
   private readonly adegaService = inject(AdegaService);
   private readonly router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
@@ -40,6 +40,7 @@ export class Adicionar {
       vinicola: ['', Validators.required],
       uva: ['', Validators.required],
       pais: ['', Validators.required],
+      safra: [new Date().getFullYear()],
       teorAlcoolico: [7],
       dataConsumo: [''],
       harmonizacao: [''],
@@ -111,6 +112,7 @@ export class Adicionar {
     tipoUva: this.form.value.uva,
     pais: this.form.value.pais,
     teorAlcoolico: this.form.value.teorAlcoolico,
+    safra: this.form.value.safra,
     dataConsumo: this.form.value.dataConsumo,
     harmonizacoes: this.form.value.harmonizacao ? [this.form.value.harmonizacao] : [],
     avaliacao: this.rating,
@@ -160,6 +162,7 @@ export class Adicionar {
         vinicola: vinho.vinicola,
         uva: vinho.tipoUva,
         pais: vinho.pais,
+        safra: vinho.safra,
         teorAlcoolico: vinho.teorAlcoolico,
         dataConsumo: vinho.dataConsumo,
         harmonizacao: vinho.harmonizacoes ? vinho.harmonizacoes.join(', ') : '',

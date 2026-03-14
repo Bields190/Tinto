@@ -1,105 +1,129 @@
 <section class="pagina pagina-detalhes-vinho">
-	<header class="topo-detalhes">
-		<button type="button" class="botao-voltar" (click)="voltar()" aria-label="Voltar para adega">
-			<span aria-hidden="true"></span>
-		</button>
+  <header class="topo-detalhes">
+    <button type="button" class="botao-voltar" (click)="voltar()" aria-label="Voltar para adega">
+      <span aria-hidden="true"></span>
+    </button>
 
-		<a class="marca-tinto" routerLink="/adega" aria-label="Ir para adega">
-			<img src="assets/img/Tinto - Areia.png" alt="Tinto" />
-		</a>
-	</header>
+    <a class="marca-tinto" routerLink="/adega" aria-label="Ir para adega">
+      <img src="assets/img/Tinto - Areia.png" alt="Tinto" />
+    </a>
+  </header>
 
-	@if (carregando()) {
-		<section class="estado estado--carregando" aria-live="polite">
-			<p>Carregando detalhes do vinho...</p>
-		</section>
-	} @else if (erro() || !vinho()) {
-		<section class="estado estado--erro" aria-live="polite">
-			<h1>Nao foi possivel carregar os detalhes.</h1>
-			<button type="button" class="botao-acao" (click)="voltar()">Voltar para adega</button>
-		</section>
-	} @else {
-		<section class="detalhes-card" [attr.aria-label]="'Detalhes do vinho ' + vinho()!.nome">
-			<div class="detalhes-grid">
-				<section class="galeria-vinho">
-					<div class="quadro-foto">
-						<button type="button" class="seta seta--esquerda" (click)="fotoAnterior()" aria-label="Foto anterior">
-							<span aria-hidden="true"></span>
-						</button>
+  @if (carregando()) {
+    <section class="estado estado--carregando" aria-live="polite">
+      <p>Carregando detalhes do vinho...</p>
+    </section>
+  } @else if (erro() || !vinho()) {
+    <section class="estado estado--erro" aria-live="polite">
+      <h1>Nao foi possivel carregar os detalhes.</h1>
+      <button type="button" class="botao-acao" (click)="voltar()">Voltar para adega</button>
+    </section>
+  } @else {
+    <section class="detalhes-card" [attr.aria-label]="'Detalhes do vinho ' + vinho()!.nome">
+      <div class="detalhes-grid">
+        <section class="galeria-vinho">
+          <div class="quadro-foto">
+            <button
+              type="button"
+              class="seta seta--esquerda"
+              (click)="fotoAnterior()"
+              aria-label="Foto anterior"
+            >
+              <span aria-hidden="true"></span>
+            </button>
 
-						<img
-							[src]="fotoAtual()"
-							[alt]="'Foto do vinho ' + vinho()!.nome"
-							(error)="tratarErroImagem($event)"
-						/>
+            <img
+              [src]="fotoAtual()"
+              [alt]="'Foto do vinho ' + vinho()!.nome"
+              (error)="tratarErroImagem($event)"
+            />
 
-						<button type="button" class="seta seta--direita" (click)="proximaFoto()" aria-label="Proxima foto">
-							<span aria-hidden="true"></span>
-						</button>
-					</div>
+            <button
+              type="button"
+              class="seta seta--direita"
+              (click)="proximaFoto()"
+              aria-label="Proxima foto"
+            >
+              <span aria-hidden="true"></span>
+            </button>
+          </div>
 
-					<div class="avaliacao" [attr.aria-label]="'Avaliacao de ' + (vinho()!.avaliacao ?? 0) + ' estrelas'">
-						@for (_ of estrelasPreenchidas(); track $index) {
-							<span class="estrela estrela--ativa" aria-hidden="true">&#9733;</span>
-						}
-						@for (_ of estrelasVazias(); track $index) {
-							<span class="estrela" aria-hidden="true">&#9734;</span>
-						}
-					</div>
-				</section>
+          <div
+            class="avaliacao"
+            [attr.aria-label]="'Avaliacao de ' + (vinho()!.avaliacao ?? 0) + ' estrelas'"
+          >
+            @for (_ of estrelasPreenchidas(); track $index) {
+              <span class="estrela estrela--ativa" aria-hidden="true">&#9733;</span>
+            }
+            @for (_ of estrelasVazias(); track $index) {
+              <span class="estrela" aria-hidden="true">&#9734;</span>
+            }
+          </div>
+        </section>
 
-				<section class="info-vinho">
-					<h1>{{ vinho()!.nome }} <span>{{ vinho()!.pais || '' }}</span></h1>
+        <section class="info-vinho">
+          <h1>
+            {{ vinho()!.nome }} <span>{{ vinho()!.pais || '' }}</span>
+          </h1>
 
-					<dl>
-						<div>
-							<dt>Vinicola:</dt>
-							<dd>{{ vinicolaTexto() }}</dd>
-						</div>
+          <dl>
+            <div>
+              <dt>Vinicola:</dt>
+              <dd>{{ vinicolaTexto() }}</dd>
+            </div>
 
-						<div>
-							<dt>Tipo de Uva:</dt>
-							<dd>{{ tipoUvaTexto() }}</dd>
-						</div>
+            <div>
+              <dt>Tipo de Uva:</dt>
+              <dd>{{ tipoUvaTexto() }}</dd>
+            </div>
 
-						<div>
-							<dt>Teor Alcoolico:</dt>
-							<dd>{{ teorAlcoolicoTexto() }}</dd>
-						</div>
+            <div>
+              <dt>Teor Alcoolico:</dt>
+              <dd>{{ teorAlcoolicoTexto() }}</dd>
+            </div>
 
-						<div>
-							<dt>Data de Consumo:</dt>
-							<dd>{{ dataConsumoTexto() }}</dd>
-						</div>
+            <dl>
+              <div>
+                <dt>Safra:</dt>
+                <dd>{{ vinho()?.safra || 'Não informada' }}</dd>
+              </div>
 
-						<div>
-							<dt>Harmonizacoes:</dt>
-							<dd>{{ harmonizacoesTexto() }}</dd>
-						</div>
+              <div>
+                <dt>Vinicola:</dt>
+                <dd>{{ vinicolaTexto() }}</dd>
+              </div>
+            </dl>
 
-						<div>
-							<dt>Comentarios:</dt>
-							<dd>{{ comentarioTexto() }}</dd>
-						</div>
-					</dl>
+            <div>
+              <dt>Data de Consumo:</dt>
+              <dd>{{ dataConsumoTexto() }}</dd>
+            </div>
 
-					<div class="acoes">
-						<button
-							type="button"
-							class="botao-acao"
-							[disabled]="salvandoFavorito()"
-							(click)="alternarFavorito()"
-						>
-							{{ tituloFavorito() }}
-						</button>
+            <div>
+              <dt>Harmonizacoes:</dt>
+              <dd>{{ harmonizacoesTexto() }}</dd>
+            </div>
 
-						<button type="button" class="botao-acao" (click)="editarVinho()">Editar</button>
+            <div>
+              <dt>Comentarios:</dt>
+              <dd>{{ comentarioTexto() }}</dd>
+            </div>
+          </dl>
 
-						<button type="button" class="botao-acao">Excluir</button>
+          <div class="acoes">
+            <button
+              type="button"
+              class="botao-acao"
+              [disabled]="salvandoFavorito()"
+              (click)="alternarFavorito()"
+            >
+              {{ tituloFavorito() }}
+            </button>
 
-					</div>
-				</section>
-			</div>
-		</section>
-	}
+            <button type="button" class="botao-acao" (click)="editarVinho()">Editar</button>
+          </div>
+        </section>
+      </div>
+    </section>
+  }
 </section>

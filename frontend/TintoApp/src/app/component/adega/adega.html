@@ -1,123 +1,167 @@
 <section class="pagina pagina-adega">
-	<header class="topo-adega">
-		<a class="atalho-perfil atalho-perfil--avatar" routerLink="/perfil" aria-label="Ir para edição de perfil">
-			<span class="avatar-icone"></span>
-		</a>
+    <header class="topo-adega">
+        <a class="atalho-perfil atalho-perfil--avatar" routerLink="/perfil" aria-label="Ir para edição de perfil">
+            <span class="avatar-icone"></span>
+        </a>
 
-		<a class="marca-adega" routerLink="/adega" aria-label="Ir para a adega">
-			<img src="assets/img/Tinto - Areia.png" alt="Tinto" />
-		</a>
+        <a class="marca-adega" routerLink="/adega" aria-label="Ir para a adega">
+            <img src="assets/img/Tinto - Areia.png" alt="Tinto" />
+        </a>
 
-		<button
-			type="button"
-			class="atalho-perfil atalho-perfil--painel"
-			(click)="sair()"
-			aria-label="Sair da conta"
-		>
-			<span class="perfil-icone"></span>
-		</button>
-	</header>
+        <button type="button" class="atalho-perfil atalho-perfil--painel" (click)="sair()" aria-label="Sair da conta">
+            <span class="perfil-icone"></span>
+        </button>
+    </header>
 
-	<div class="barra-acoes">
-		<label class="campo-busca" for="busca-vinhos">
-			<span class="campo-busca__icone" aria-hidden="true"></span>
-			<input
-				id="busca-vinhos"
-				type="search"
-				[value]="termoBusca()"
-				(input)="atualizarBusca($event)"
-				placeholder="Digite aqui..."
-			/>
-		</label>
+    <div class="bloco-pesquisa">
+        <div class="barra-acoes">
+            <label class="campo-busca" for="busca-vinhos">
+                <span class="campo-busca__icone" aria-hidden="true"></span>
+                <input
+                    id="busca-vinhos"
+                    type="search"
+                    [value]="termoBusca()"
+                    (input)="atualizarBusca($event)"
+                    placeholder="Buscar vinhos por nome, vinícola, uva ou país."
+                />
+            </label>
 
-		<div class="acoes-topo">
-			<button
-				type="button"
-				class="acao-expansivel"
-				[class.acao-expansivel--ativa]="somenteFavoritos()"
-				(click)="alternarFavoritos()"
-				[attr.aria-pressed]="somenteFavoritos()"
-			>
-				<span class="acao-expansivel__icone acao-expansivel__icone--estrela" aria-hidden="true"></span>
-				<span class="acao-expansivel__texto">Favoritos</span>
-			</button>
+            <div class="acoes-topo">
+                <button
+                    type="button"
+                    class="acao-expansivel"
+                    [class.acao-expansivel--ativa]="mostrarFiltros()"
+                    (click)="alternarPainelFiltros()"
+                >
+                    <span class="acao-expansivel__icone acao-expansivel__icone--filtro" aria-hidden="true">≡</span>
+                    <span class="acao-expansivel__texto">Filtros</span>
+                </button>
 
-			<a class="acao-expansivel" routerLink="/adicionar">
-				<span class="acao-expansivel__icone acao-expansivel__icone--mais" aria-hidden="true"></span>
-				<span class="acao-expansivel__texto">Adicionar</span>
-			</a>
-		</div>
-	</div>
+                <button
+                    type="button"
+                    class="acao-expansivel"
+                    [class.acao-expansivel--ativa]="somenteFavoritos()"
+                    (click)="alternarFavoritos()"
+                    [attr.aria-pressed]="somenteFavoritos()"
+                >
+                    <span class="acao-expansivel__icone acao-expansivel__icone--estrela" aria-hidden="true"></span>
+                    <span class="acao-expansivel__texto">Favoritos</span>
+                </button>
 
-	@if (carregando()) {
-		<section class="estado-adega estado-adega--carregando" aria-live="polite">
-			<p>Carregando sua adega...</p>
-		</section>
-	} @else if (erroCarregamento()) {
-		<section class="estado-adega estado-adega--erro" aria-live="polite">
-			<h1>Não foi possível carregar sua adega.</h1>
-			<p>Está tudo ok? Tente novamente em instantes.</p>
-		</section>
-	} @else if (listaVazia()) {
-		<section class="estado-adega estado-adega--vazia" aria-live="polite">
-			<div class="estado-adega__conteudo">
-				<img src="assets/img/Logo - Areia.png" alt="Logo Tinto" />
-				<h1>Sua adega ainda está vazia.</h1>
-				<p>Comece adicionando o seu primeiro vinho e monte sua coleção com o seu estilo.</p>
-				<a class="botao-padrao estado-adega__cta" routerLink="/adicionar">Adicionar primeiro vinho</a>
-			</div>
-		</section>
-	} @else if (buscaSemResultado()) {
-		<section class="estado-adega estado-adega--sem-resultado" aria-live="polite">
-			<div class="estado-adega__conteudo">
-				<h1>Nenhum vinho encontrado.</h1>
-				<p>Refine a busca ou limpe os filtros para visualizar todos os rótulos da sua adega.</p>
-				<button type="button" class="botao-padrao estado-adega__cta" (click)="limparBusca()">
-					Limpar busca
-				</button>
-			</div>
-		</section>
-	} @else {
-		<section class="grade-vinhos" aria-label="Vinhos da adega">
-			@for (vinho of vinhosFiltrados(); track trackByVinhoId($index, vinho)) {
-				<article
-					class="cartao-vinho"
-					role="button"
-					tabindex="0"
-					(click)="abrirDetalhes(vinho)"
-					(keydown.enter)="abrirDetalhes(vinho)"
-					(keydown.space)="abrirDetalhes(vinho); $event.preventDefault()"
-					[attr.aria-label]="'Abrir detalhes de ' + vinho.nome"
-				>
-					<figure class="cartao-vinho__midia">
-						<img
-							[src]="imagemDoVinho(vinho)"
-							[alt]="'Foto do vinho ' + vinho.nome"
-							loading="lazy"
-							(error)="tratarErroImagem($event)"
-						/>
-					</figure>
+                <a class="acao-expansivel" routerLink="/adicionar">
+                    <span class="acao-expansivel__icone acao-expansivel__icone--mais" aria-hidden="true"></span>
+                    <span class="acao-expansivel__texto">Adicionar</span>
+                </a>
+            </div>
+        </div>
 
-					<div class="cartao-vinho__conteudo">
-						<h2>
-							@if (vinho.isFavorito) {
-								<span class="favorito-nome" aria-hidden="true">&#9733;</span>
-							}
-							<span>{{ vinho.nome }}</span>
-						</h2>
+        @if (mostrarFiltros()) {
+            <div class="painel-filtros">
+                <label class="campo-filtro">
+                    <span class="campo-filtro__rotulo">Safra</span>
+                    <input type="number" min="1900" max="2100" placeholder="Ex: 2018" [ngModel]="filtroSafra()" (ngModelChange)="filtroSafra.set($event); dispararBusca()">
+                </label>
 
-						<p>{{ vinho.pais || 'Origem não informada' }}</p>
+                <label class="campo-filtro">
+                    <span class="campo-filtro__rotulo">Teor Alcoólico (%)</span>
+                    <div class="controle-duplo">
+                        <input type="range" class="slider-teor" min="0" max="25" step="0.5" [value]="filtroTeor() || 0" (input)="atualizarTeor($event)">
+                        <input type="number" class="input-teor" min="0" max="25" step="0.5" placeholder="0.0" [value]="filtroTeor()" (input)="atualizarTeor($event)">
+                    </div>
+                </label>
 
-						@if ((vinho.avaliacao ?? 0) > 0) {
-							<div class="cartao-vinho__avaliacao" [attr.aria-label]="'Avaliação de ' + vinho.avaliacao + ' estrelas'">
-								@for (estrela of estrelas(vinho.avaliacao); track estrela) {
-									<span aria-hidden="true">&#9733;</span>
-								}
-							</div>
-						}
-					</div>
-				</article>
-			}
-		</section>
-	}
+                <label class="campo-filtro">
+                    <span class="campo-filtro__rotulo">Data de Consumo</span>
+                    <input type="date" [ngModel]="filtroData()" (ngModelChange)="filtroData.set($event); dispararBusca()">
+                </label>
+
+                <div class="campo-filtro campo-filtro--avaliacoes">
+                    <span class="campo-filtro__rotulo">Avaliação</span>
+                    <div class="seletor-estrelas">
+                        @for (estrela of [1, 2, 3, 4, 5]; track estrela) {
+                            <button 
+                                type="button" 
+                                (click)="definirAvaliacao(estrela)"
+                                [class.ativa]="(filtroAvaliacao() || 0) >= estrela"
+                                aria-label="Filtrar por avaliação">
+                                &#9733;
+                            </button>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    @if (carregando()) {
+        <section class="estado-adega estado-adega--carregando" aria-live="polite">
+            <p>Carregando sua adega...</p>
+        </section>
+    } @else if (erroCarregamento()) {
+        <section class="estado-adega estado-adega--erro" aria-live="polite">
+            <h1>Não foi possível carregar sua adega.</h1>
+            <p>Está tudo ok? Tente novamente em instantes.</p>
+        </section>
+    } @else if (listaVazia()) {
+        <section class="estado-adega estado-adega--vazia" aria-live="polite">
+            <div class="estado-adega__conteudo">
+                <img src="assets/img/Logo - Areia.png" alt="Logo Tinto" />
+                <h1>Sua adega ainda está vazia.</h1>
+                <p>Comece adicionando o seu primeiro vinho e monte sua coleção com o seu estilo.</p>
+                <a class="botao-padrao estado-adega__cta" routerLink="/adicionar">Adicionar primeiro vinho</a>
+            </div>
+        </section>
+    } @else if (buscaSemResultado()) {
+        <section class="estado-adega estado-adega--sem-resultado" aria-live="polite">
+            <div class="estado-adega__conteudo">
+                <h1>Nenhum vinho encontrado.</h1>
+                <p>Refine a busca ou limpe os filtros para visualizar todos os rótulos da sua adega.</p>
+                <button type="button" class="botao-padrao estado-adega__cta" (click)="limparBusca()">
+                    Limpar filtros
+                </button>
+            </div>
+        </section>
+    } @else {
+        <section class="grade-vinhos" aria-label="Vinhos da adega">
+            @for (vinho of vinhosFiltrados(); track trackByVinhoId($index, vinho)) {
+                <article
+                    class="cartao-vinho"
+                    role="button"
+                    tabindex="0"
+                    (click)="abrirDetalhes(vinho)"
+                    (keydown.enter)="abrirDetalhes(vinho)"
+                    (keydown.space)="abrirDetalhes(vinho); $event.preventDefault()"
+                    [attr.aria-label]="'Abrir detalhes de ' + vinho.nome"
+                >
+                    <figure class="cartao-vinho__midia">
+                        <img
+                            [src]="imagemDoVinho(vinho)"
+                            [alt]="'Foto do vinho ' + vinho.nome"
+                            loading="lazy"
+                            (error)="tratarErroImagem($event)"
+                        />
+                    </figure>
+
+                    <div class="cartao-vinho__conteudo">
+                        <h2>
+                            @if (vinho.isFavorito) {
+                                <span class="favorito-nome" aria-hidden="true">&#9733;</span>
+                            }
+                            <span>{{ vinho.nome }}</span>
+                        </h2>
+
+                        <p>{{ vinho.pais || 'Origem não informada' }}</p>
+
+                        @if ((vinho.avaliacao ?? 0) > 0) {
+                            <div class="cartao-vinho__avaliacao" [attr.aria-label]="'Avaliação de ' + vinho.avaliacao + ' estrelas'">
+                                @for (estrela of estrelas(vinho.avaliacao); track estrela) {
+                                    <span aria-hidden="true">&#9733;</span>
+                                }
+                            </div>
+                        }
+                    </div>
+                </article>
+            }
+        </section>
+    }
 </section>
