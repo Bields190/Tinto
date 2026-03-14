@@ -22,10 +22,11 @@ export class Adicionar {
   form: FormGroup;
   rating = 0;
   hoverRating = 0;
-  photos: PhotoSlot[] = Array.from({ length: 4 }, () => ({}));
+  photos: PhotoSlot[] = Array.from({ length: 3 }, () => ({}));
   private readonly adegaService = inject(AdegaService);
   private readonly router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
+  protected readonly currentYear = new Date().getFullYear();
 
   ngOnInit() {
     const id = this.activatedRoute.snapshot.paramMap.get('id');
