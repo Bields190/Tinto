@@ -162,33 +162,47 @@
   }
 }
 
-/* Responsividade */
-@media (max-width: 768px) {
-  .formulario-wrapper {
-    padding: 2rem 1.5rem;
-    margin-inline: auto;
-    width: calc(100% - 1rem);
+  /* Modal de confirmação de senha */
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(6px);
+    z-index: 999;
   }
 
-  .titulo-formulario {
-    font-size: 1.8rem;
-    margin-bottom: 1.5rem;
+  .modal-content {
+    width: min(90vw, 420px);
+    padding: 1.5rem;
+    border-radius: 0.85rem;
+    background: #9A3957;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.45);
+    color: var(--cor-creme);
+    text-align: center;
   }
 
-  .input-padrao {
-    font-size: 16px; /* Previne zoom em iOS */
-    padding: 0.9rem 1rem;
+  .modal-content h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1.1rem;
+    color: var(--cor-creme);
   }
 
-  .botao-cadastrar {
-    padding: 0.9rem 1.5rem;
-    font-size: 1.3rem;
+  .modal-content .campo-grupo {
+    margin-bottom: 1rem;
   }
 
-  .campo-grupo {
-    gap: 0.4rem;
+  .erro-senha {
+    color: #ff6b6b;
+    font-size: 0.9rem;
+    margin-bottom: 0.9rem;
   }
-}
 
 @media (max-width: 480px) {
   .cadastro-container {

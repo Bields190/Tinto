@@ -67,13 +67,36 @@
         >
           SALVAR
         </button>
-        <button          *ngIf="!modoEdicao"          type="button"
+        <button
+          type="button"
           (click)="voltar()"
           class="botao-padrao botao-cadastrar"
         >
           VOLTAR
         </button>
       </div>
+
+      <section *ngIf="showSenhaConfirmModal" class="modal-overlay">
+        <div class="modal-content">
+          <h2>Confirme sua senha para editar</h2>
+          <form [formGroup]="senhaConfirmForm" class="forms-item">
+            <div class="campo-grupo">
+              <input
+                id="confirmSenha"
+                type="password"
+                formControlName="confirmSenha"
+                class="input-padrao"
+                placeholder="Digite sua senha"
+              />
+            </div>
+            <div class="erro-senha" *ngIf="erroSenha">{{ erroSenha }}</div>
+            <div class="botoes-grupo">
+              <button type="button" class="botao-padrao" (click)="confirmarSenha()">Confirmar</button>
+              <button type="button" class="botao-padrao" (click)="cancelarConfirmacao()">Cancelar</button>
+            </div>
+          </form>
+        </div>
+      </section>
     </form>
   </div>
 </section>

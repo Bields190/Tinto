@@ -67,17 +67,8 @@
     grid-column: 1 / -1;
   }
 
-  /* Campos que devem ocupar toda a largura do formulário (2 colunas) */
   .campo-grupo.avaliacao {
     grid-column: 1 / -1;
-  }
-
-  /* Comentários e fotos lado a lado */
-  .campo-grupo.comentarios {
-    grid-column: 1 / 2;
-  }
-  .campo-grupo.fotos {
-    grid-column: 2 / 3;
   }
 }
 
@@ -153,7 +144,6 @@
       cursor: pointer;
     }
 
-    /* Firefox */
     &::-moz-range-track {
       height: 0.4rem;
       border-radius: 999px;
@@ -168,7 +158,6 @@
       cursor: pointer;
     }
 
-    /* Edge/IE */
     &::-ms-track {
       height: 0.4rem;
       border-radius: 999px;
@@ -217,13 +206,12 @@
     display: flex;
     justify-content: center;
     gap: 0.5rem;
-    margin-bottom: 2rem;
   }
 
   .star {
     all: unset;
     cursor: pointer;
-    font-size: 2.2rem;
+    font-size: 3rem;
     color: rgba(246, 221, 196, 0.4);
     transition: color 150ms ease;
     line-height: 1;
@@ -241,51 +229,71 @@
 
 .comentarios {
   textarea {
-    min-height: 200px;
+    min-height: 70px;
     resize: vertical;
   }
-  margin-right: 2rem;
 }
 
 .fotos {
   .photo-grid {
     display: grid;
-    grid-template-columns: repeat(2, minmax(100px, 1fr));
-    gap: 1.5rem;
-    max-width: 260px;
+      grid-template-columns: repeat(3, minmax(100px, 1fr));
+      gap: 3em;
+      max-width: 360px;
+    }
+
+    .photo-slot {
+      position: relative;
+      width: 110px;
+      height: 110px;
+      border: 2px dashed rgba(246, 221, 196, 0.5);
+      border-radius: var(--borda-arredondada-media);
+      background: rgba(0, 0, 0, 0.12);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+
+      &:hover {
+        border-color: rgba(246, 221, 196, 0.9);
+        background: rgba(0, 0, 0, 0.18);
+      }
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .plus {
+        font-size: 2.2rem;
+        color: rgba(246, 221, 196, 0.7);
+      }
+
+      .remove-photo {
+        position: absolute;
+        top: 6px;
+        right: 6px;
+        width: 26px;
+        height: 26px;
+        border: none;
+        border-radius: 50%;
+        background: rgba(0, 0, 0, 0.55);
+        color: var(--cor-creme);
+        font-size: 1.1rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .remove-photo:focus {
+        outline: 2px solid var(--cor-creme);
+        outline-offset: 2px;
+      }
+    }
   }
-
-  .photo-slot {
-    position: relative;
-    width: 110px;
-    height: 110px;
-    border: 2px dashed rgba(246, 221, 196, 0.5);
-    border-radius: var(--borda-arredondada-media);
-    background: rgba(0, 0, 0, 0.12);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-
-    &:hover {
-      border-color: rgba(246, 221, 196, 0.9);
-      background: rgba(0, 0, 0, 0.18);
-    }
-
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .plus {
-      font-size: 2.2rem;
-      color: rgba(246, 221, 196, 0.7);
-    }
-  }
-}
-
 .input-padrao:disabled {
   opacity: 0.6;
   cursor: not-allowed;
