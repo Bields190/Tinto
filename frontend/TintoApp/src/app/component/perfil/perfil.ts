@@ -10,14 +10,22 @@ import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 })
 export class Perfil implements OnInit {
   perfilForm: FormGroup;
+  senhaConfirmForm: FormGroup;
   modoEdicao = false;
+  showSenhaConfirmModal = false;
+  senhaAtual = 'onanista';
+  erroSenha = '';
 
   constructor(private fb: FormBuilder) {
     this.perfilForm = this.fb.group({
       nome: ['Khalil Brito'],
       email: ['khalildbrito@gmail.com'],
-      senha: [''],
+      senha: ['onanista'],
       dataNascimento: [''],
+    });
+
+    this.senhaConfirmForm = this.fb.group({
+      confirmSenha: [''],
     });
   }
 
@@ -26,14 +34,40 @@ export class Perfil implements OnInit {
   }
 
   habilitarEdicao() {
+    this.erroSenha = '';
+    this.senhaConfirmForm.reset();
+    this.showSenhaConfirmModal = true;
+  }
+
+  confirmarSenha() {
+    const confirmSenha = this.senhaConfirmForm.value.confirmSenha;
+
+    if (!confirmSenha) {
+      this.erroSenha = 'Digite a senha para confirmar.';
+      return;
+    }
+
+    if (confirmSenha !== this.senhaAtual) {
+      this.erroSenha = 'Senha incorreta. A edição não foi liberada.';
+      return;
+    }
+
+    this.erroSenha = '';
+    this.showSenhaConfirmModal = false;
     this.modoEdicao = true;
     this.perfilForm.enable();
+  }
+
+  cancelarConfirmacao() {
+    this.erroSenha = '';
+    this.showSenhaConfirmModal = false;
   }
 
   salvarEdicao() {
     if (this.perfilForm.valid) {
       this.modoEdicao = false;
       this.perfilForm.disable();
+      this.senhaAtual = this.perfilForm.value.senha || this.senhaAtual;
       console.log('Dados salvos:', this.perfilForm.value);
     }
   }
