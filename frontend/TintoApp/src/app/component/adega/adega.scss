@@ -508,6 +508,7 @@
    BLOCO DE PESQUISA E PAINEL DE FILTROS
    ========================================= */
 
+/* Garante que a barra de busca e os filtros fiquem alinhados */
 .bloco-pesquisa {
     display: flex;
     flex-direction: column;
@@ -515,6 +516,7 @@
     width: 100%;
 }
 
+/* O fundo do painel de filtros (estilo vidro escuro) */
 .painel-filtros {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -533,6 +535,7 @@
     to { opacity: 1; transform: translateY(0); }
 }
 
+/* Container de cada label + input */
 .campo-filtro {
     display: flex;
     flex-direction: column;
@@ -556,10 +559,12 @@
     padding: 0.8rem 1rem;
     border: 1px solid rgb(246 221 196 / 40%);
     border-radius: 0.8rem;
+    background: rgba(24, 3, 10, 0.4); /* Fundo bem escuro para contraste */
     color: var(--cor-creme);
     font-family: var(--fonte-corpo);
     font-size: 1rem;
     transition: border-color 200ms ease, box-shadow 200ms ease;
+    color-scheme: dark; /* Força o ícone do calendário a ficar branco/escuro */
 }
 
 .campo-filtro input::placeholder {
@@ -569,8 +574,10 @@
 .campo-filtro input:focus {
     outline: none;
     border-color: var(--cor-creme);
+    box-shadow: 0 0 0 3px rgba(246, 221, 196, 0.15); /* Efeito de brilho ao clicar */
 }
 
+/* --- Controle Slider Teor Alcoólico --- */
 .controle-duplo {
     display: flex;
     align-items: center;
@@ -583,6 +590,7 @@
     padding: 0.8rem 0.5rem;
 }
 
+/* Customização do "Trilho" do slider */
 .slider-teor {
     flex: 1;
     -webkit-appearance: none;
@@ -593,6 +601,7 @@
     outline: none;
 }
 
+/* Customização da "Bolinha" do slider */
 .slider-teor::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
@@ -606,8 +615,10 @@
 }
 
 .slider-teor::-webkit-slider-thumb:hover {
+    transform: scale(1.2); /* Aumenta um pouquinho ao passar o mouse */
 }
 
+/* --- Seletor de Estrelas Customizado --- */
 .campo-filtro--avaliacoes {
     justify-content: flex-start;
 }
@@ -619,11 +630,14 @@
     padding-top: 0.3rem;
 }
 
+/* Removemos a "caixa" do botão padrão do navegador */
 .seletor-estrelas button {
     background: transparent;
     border: none;
     padding: 0;
+    font-size: 2.4rem; /* Tamanho das estrelas */
     line-height: 1;
+    color: rgba(246, 221, 196, 0.15); /* Estrela apagada quase invisível */
     cursor: pointer;
     transition: color 200ms ease, transform 200ms ease;
     display: inline-flex;
