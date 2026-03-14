@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-perfil',
@@ -16,7 +17,7 @@ export class Perfil implements OnInit {
   senhaAtual = 'onanista';
   erroSenha = '';
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private router: Router) {
     this.perfilForm = this.fb.group({
       nome: ['Khalil Brito'],
       email: ['khalildbrito@gmail.com'],
@@ -77,13 +78,6 @@ export class Perfil implements OnInit {
   }
 
   voltar() {
-    this.modoEdicao = false;
-    this.desabilitarInputs();
-    this.perfilForm.reset({
-      nome: 'Khalil Brito',
-      email: 'khalildbrito@gmail.com',
-      senha: '',
-      dataNascimento: '',
-    });
+    this.router.navigate(['/adega']);
   }
 }
