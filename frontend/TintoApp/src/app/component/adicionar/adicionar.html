@@ -127,6 +127,14 @@
 
               <ng-container *ngIf="slot.url; else placeholder">
                 <img [src]="slot.url" alt="Foto {{ i + 1 }}" />
+                <button
+                  type="button"
+                  class="remove-photo"
+                  (click)="removePhoto(i, $event)"
+                  aria-label="Remover foto {{ i + 1 }}"
+                >
+                  ×
+                </button>
               </ng-container>
               <ng-template #placeholder>
                 <span class="plus">+</span>

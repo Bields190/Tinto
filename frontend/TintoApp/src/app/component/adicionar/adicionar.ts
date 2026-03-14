@@ -22,7 +22,7 @@ export class Adicionar {
   form: FormGroup;
   rating = 0;
   hoverRating = 0;
-  photos: PhotoSlot[] = Array.from({ length: 4 }, () => ({}));
+  photos: PhotoSlot[] = Array.from({ length: 3 }, () => ({}));
   private readonly adegaService = inject(AdegaService);
   private readonly router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
@@ -87,6 +87,18 @@ export class Adicionar {
 
     // Reset input to allow selecting the same file again
     input.value = '';
+  }
+
+  removePhoto(index: number, event: MouseEvent) {
+    event.stopPropagation();
+
+    const existing = this.photos[index]?.url;
+    if (existing) {
+      URL.revokeObjectURL(existing);
+    }
+
+    this.photos[index] = {};
+    this.photos = [...this.photos];
   }
 
   protected salvarVinho(): void {
@@ -162,13 +174,13 @@ export class Adicionar {
           url: `http://localhost:8080/api/fotos/exibir/${f.arquivoPath}`
         }));
         
-        // Preencher o restante dos slots vazios até 4
-        while (this.photos.length < 4) {
+        // Preencher o restante dos slots vazios até 3
+        while (this.photos.length < 3) {
           this.photos.push({});
         }
       } else {
         // Se não houver fotos, garante que o array esteja limpo com slots vazios
-        this.photos = Array.from({ length: 4 }, () => ({}));
+        this.photos = Array.from({ length: 3 }, () => ({}));
       }
     },
     error: (err) => console.error('Erro ao carregar dados do vinho', err)
