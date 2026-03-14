@@ -11,8 +11,8 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    width: 95%;
-    gap: 2rem;
+    width: 85%;
+    gap: 2rem; 
 }
 
 .umbloco {
@@ -25,6 +25,7 @@
   width: 100%;
   max-width: 150px;
   margin-top: 2rem;
+  margin-bottom: 6rem;
 
   img {
     width: 100%;
@@ -36,6 +37,8 @@
   width: 100%;
   max-width: 650px;
   background: #9A3957;
+
+  margin-bottom: 3rem;
   
   border-radius: var(--borda-arredondada-grande);
   padding: 1.25rem 1.25rem;
@@ -45,7 +48,7 @@
 
 .titulo-forms {
   font-family: var(--fonte-corpo);
-  font-size: clamp(1rem, 5vw, 2rem);
+  font-size: clamp(2.25rem, 5vw, 2rem);
   font-weight: 500;
   letter-spacing: 0.09em;
   text-align: center;

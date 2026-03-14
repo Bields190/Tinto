@@ -11,7 +11,7 @@
   width: 100%;
   max-width: 150px;
   margin-top: 2rem;
-  margin-bottom: 3rem;
+  margin-bottom: 9rem;
 
   img {
     width: 100%;
@@ -21,8 +21,10 @@
 
 .forms {
   width: 100%;
-  max-width: 475px;
+  max-width: 500px;
   background: #9A3957;
+
+  margin-bottom: 3rem;
   
   border-radius: var(--borda-arredondada-grande);
   padding: 1.25rem 1.25rem;
@@ -32,7 +34,7 @@
 
 .titulo-forms {
   font-family: var(--fonte-corpo);
-  font-size: clamp(1rem, 5vw, 2rem);
+  font-size: clamp(2.25rem, 5vw, 2rem);
   font-weight: 500;
   letter-spacing: 0.09em;
   text-align: center;
