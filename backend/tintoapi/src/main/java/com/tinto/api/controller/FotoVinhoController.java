@@ -9,6 +9,7 @@ import org.springframework.http.MediaType;
 import java.net.MalformedURLException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,6 +60,16 @@ public class FotoVinhoController {
             return ResponseEntity.ok(url);
         } else {
             return ResponseEntity.noContent().build(); // Retorna 204 se não houver foto
+        }
+    }
+
+    @DeleteMapping("/{fotoId}")
+    public ResponseEntity<?> excluirFoto(@PathVariable Long fotoId) {
+        try {
+            fotoVinhoService.excluirFoto(fotoId);
+            return ResponseEntity.ok().body(Collections.singletonMap("mensagem", "Foto excluída com sucesso!"));
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
 }
