@@ -502,5 +502,149 @@
 	.acao-expansivel__texto,
 	.cartao-vinho {
 		transition: none;
-	}
+	}}
+
+/* =========================================
+   BLOCO DE PESQUISA E PAINEL DE FILTROS
+   ========================================= */
+
+.bloco-pesquisa {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    width: 100%;
+}
+
+.painel-filtros {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.8rem;
+    padding: 2rem;
+    border: 1px solid rgb(246 221 196 / 32%); /* Borda creme transparente */
+    border-radius: 1.35rem; /* Mesmo arredondamento dos cartões */
+    background: linear-gradient(145deg, rgb(112 12 54 / 42%), rgb(72 5 31 / 48%));
+    box-shadow: 0 14px 28px rgb(24 3 10 / 18%);
+    animation: fadeInDown 300ms ease-out forwards;
+    transform-origin: top;
+}
+
+@keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.campo-filtro {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.campo-filtro__rotulo {
+    font-family: var(--fonte-corpo);
+    font-size: 0.95rem;
+    color: var(--cor-creme);
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+/* Estilo para os inputs de Safra, Número e Calendário */
+.campo-filtro input[type="number"],
+.campo-filtro input[type="date"] {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.8rem 1rem;
+    border: 1px solid rgb(246 221 196 / 40%);
+    border-radius: 0.8rem;
+    color: var(--cor-creme);
+    font-family: var(--fonte-corpo);
+    font-size: 1rem;
+    transition: border-color 200ms ease, box-shadow 200ms ease;
+}
+
+.campo-filtro input::placeholder {
+    color: rgba(246, 221, 196, 0.3); /* Placeholder creme bem suave */
+}
+
+.campo-filtro input:focus {
+    outline: none;
+    border-color: var(--cor-creme);
+}
+
+.controle-duplo {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.controle-duplo .input-teor {
+    width: 5.5rem;
+    text-align: center;
+    padding: 0.8rem 0.5rem;
+}
+
+.slider-teor {
+    flex: 1;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 6px;
+    background: rgba(246, 221, 196, 0.2);
+    border-radius: 999px;
+    outline: none;
+}
+
+.slider-teor::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--cor-creme);
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+    transition: transform 150ms ease;
+}
+
+.slider-teor::-webkit-slider-thumb:hover {
+}
+
+.campo-filtro--avaliacoes {
+    justify-content: flex-start;
+}
+
+.seletor-estrelas {
+    display: flex;
+    gap: 0.4rem;
+    align-items: center;
+    padding-top: 0.3rem;
+}
+
+.seletor-estrelas button {
+    background: transparent;
+    border: none;
+    padding: 0;
+    line-height: 1;
+    cursor: pointer;
+    transition: color 200ms ease, transform 200ms ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.seletor-estrelas button:hover {
+    transform: scale(1.15); /* Efeito de pular ao passar o mouse */
+}
+
+.seletor-estrelas button.ativa {
+    color: #f7d49b; /* Cor dourada (a mesma que você usou no seu grid) */
+    text-shadow: 0 0 12px rgba(247, 212, 155, 0.4); /* Brilho leve */
+} 
+
+input[type='number'] {
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  appearance: textfield;
 }

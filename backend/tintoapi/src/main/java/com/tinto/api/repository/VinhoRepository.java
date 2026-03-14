@@ -22,9 +22,9 @@ public interface VinhoRepository extends JpaRepository<Vinho, Long> {
                         "LOWER(v.pais) LIKE LOWER(CONCAT('%', :termo, '%'))" +
                         ")) " +
                         "AND (:safra IS NULL OR v.safra = :safra) " +
-                        "AND (:teorAlcoolico IS NULL OR v.teorAlcoolico = :teorAlcoolico) " +
+                        "AND (:teorAlcoolico IS NULL OR v.teorAlcoolico >= :teorAlcoolico) " +
                         "AND (:dataConsumo IS NULL OR v.dataConsumo = :dataConsumo) " +
-                        "AND (:avaliacao IS NULL OR v.avaliacao = :avaliacao) " +
+                        "AND (:avaliacao IS NULL OR v.avaliacao >= :avaliacao) " +
                         "AND (:isFavorito IS NULL OR v.isFavorito = :isFavorito)")
         List<Vinho> buscarComFiltros(
                         @Param("usuarioId") Long usuarioId,
