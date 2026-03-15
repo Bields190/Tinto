@@ -30,23 +30,23 @@
       </div>
 
       <div class="campo-grupo">
-        <label for="senha" class="label-campo">Senha</label>
-        <input
-          id="senha"
-          type="password"
-          formControlName="senha"
-          class="input-padrao"
-          placeholder="if i tell my secret, promise you'll keep it"
-        />
-      </div>
-
-      <div class="campo-grupo">
         <label for="dataNascimento" class="label-campo">Data de Nascimento</label>
         <input
           id="dataNascimento"
           type="date"
           formControlName="dataNascimento"
           class="input-padrao"
+        />
+      </div>
+
+      <div class="campo-grupo" *ngIf="modoEdicao">
+        <label for="novaSenha" class="label-campo">Nova Senha (Opcional)</label>
+        <input
+          id="novaSenha"
+          type="password"
+          formControlName="novaSenha"
+          class="input-padrao"
+          placeholder="Deixe em branco para não alterar"
         />
       </div>
 
@@ -67,11 +67,7 @@
         >
           SALVAR
         </button>
-        <button
-          type="button"
-          (click)="voltar()"
-          class="botao-padrao botao-cadastrar"
-        >
+        <button type="button" (click)="voltar()" class="botao-padrao botao-cadastrar">
           VOLTAR
         </button>
       </div>
@@ -91,8 +87,12 @@
             </div>
             <div class="erro-senha" *ngIf="erroSenha">{{ erroSenha }}</div>
             <div class="botoes-grupo">
-              <button type="button" class="botao-padrao" (click)="confirmarSenha()">Confirmar</button>
-              <button type="button" class="botao-padrao" (click)="cancelarConfirmacao()">Cancelar</button>
+              <button type="button" class="botao-padrao" (click)="confirmarSenha()">
+                Confirmar
+              </button>
+              <button type="button" class="botao-padrao" (click)="cancelarConfirmacao()">
+                Cancelar
+              </button>
             </div>
           </form>
         </div>
