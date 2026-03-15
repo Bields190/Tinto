@@ -1,43 +1,76 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { UsuarioService } from '../../service/usuario.service';
+import { jwtDecode } from 'jwt-decode';
 
 @Component({
   selector: 'app-perfil',
+  standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './perfil.html',
-  styleUrl: './perfil.scss',
+  styleUrls: ['./perfil.scss'],
 })
 export class Perfil implements OnInit {
   perfilForm: FormGroup;
   senhaConfirmForm: FormGroup;
   modoEdicao = false;
   showSenhaConfirmModal = false;
-  senhaAtual = 'onanista';
   erroSenha = '';
+  
+  // Variáveis para guardar os valores originais e comparar o que mudou
+  dadosOriginais: any = {};
+  
+  private fb = inject(FormBuilder);
+  private router = inject(Router);
+  private usuarioService = inject(UsuarioService);
 
-  constructor(private fb: FormBuilder, private router: Router) {
+  constructor() {
     this.perfilForm = this.fb.group({
-      nome: ['Khalil Brito'],
-      email: ['khalildbrito@gmail.com'],
-      senha: ['onanista'],
-      dataNascimento: [''],
+      nome: [{value: '', disabled: true}],
+      email: [{value: '', disabled: true}],
+      dataNascimento: [{value: '', disabled: true}],
+      novaSenha: [{value: '', disabled: true}] // Campo adicionado
     });
-
+    
     this.senhaConfirmForm = this.fb.group({
-      confirmSenha: [''],
+      confirmSenha: ['', Validators.required],
     });
   }
 
   ngOnInit() {
-    this.desabilitarInputs();
+    this.carregarDadosDoToken();
   }
 
   habilitarEdicao() {
     this.erroSenha = '';
     this.senhaConfirmForm.reset();
     this.showSenhaConfirmModal = true;
+  }
+
+  desabilitarInputs() {
+    this.perfilForm.disable();
+    this.modoEdicao = false;
+  }
+
+  carregarDadosDoToken() {
+    const token = localStorage.getItem('token');
+    if (token) {
+      try {
+        const decoded: any = jwtDecode(token);
+        this.perfilForm.patchValue({
+          nome: decoded.nome,
+          email: decoded.sub 
+          // Se tiver a data no token, coloque aqui também
+        });
+        
+        // Guarda como o usuário era ANTES de editar
+        this.dadosOriginais = this.perfilForm.getRawValue();
+      } catch (error) {
+        console.error("Erro ao decodificar token", error);
+      }
+    }
   }
 
   confirmarSenha() {
@@ -48,15 +81,19 @@ export class Perfil implements OnInit {
       return;
     }
 
-    if (confirmSenha !== this.senhaAtual) {
-      this.erroSenha = 'Senha incorreta. A edição não foi liberada.';
-      return;
-    }
-
-    this.erroSenha = '';
-    this.showSenhaConfirmModal = false;
-    this.modoEdicao = true;
-    this.perfilForm.enable();
+    this.usuarioService.validarSenha(confirmSenha).subscribe({
+      next: () => {
+        this.erroSenha = '';
+        this.showSenhaConfirmModal = false;
+        this.modoEdicao = true;
+        this.perfilForm.enable();
+        // A data de nascimento normalmente não muda, então mantemos bloqueada
+        this.perfilForm.get('dataNascimento')?.disable(); 
+      },
+      error: () => {
+        this.erroSenha = 'Senha incorreta.';
+      }
+    });
   }
 
   cancelarConfirmacao() {
@@ -65,16 +102,54 @@ export class Perfil implements OnInit {
   }
 
   salvarEdicao() {
-    if (this.perfilForm.valid) {
-      this.modoEdicao = false;
-      this.perfilForm.disable();
-      this.senhaAtual = this.perfilForm.value.senha || this.senhaAtual;
-      console.log('Dados salvos:', this.perfilForm.value);
-    }
-  }
+    const dadosNovos = this.perfilForm.getRawValue();
+    const senhaAtual = this.senhaConfirmForm.value.confirmSenha;
 
-  desabilitarInputs() {
-    this.perfilForm.disable();
+    let alterouAlgo = false;
+
+    // 1. Verifica se alterou o NOME
+    if (dadosNovos.nome !== this.dadosOriginais.nome) {
+      alterouAlgo = true;
+      this.usuarioService.atualizarNome(senhaAtual, dadosNovos.nome).subscribe({
+        next: (res: any) => {
+          if (res.token) localStorage.setItem('token', res.token);
+          this.dadosOriginais.nome = dadosNovos.nome; // Atualiza a base
+        },
+        error: (err) => alert('Erro ao alterar nome: ' + err.error)
+      });
+    }
+
+    // 2. Verifica se alterou o EMAIL
+    if (dadosNovos.email !== this.dadosOriginais.email) {
+      alterouAlgo = true;
+      this.usuarioService.atualizarEmail(senhaAtual, dadosNovos.email).subscribe({
+        next: (res: any) => {
+          if (res.token) localStorage.setItem('token', res.token);
+          this.dadosOriginais.email = dadosNovos.email; // Atualiza a base
+        },
+        error: (err) => alert('Erro ao alterar email: ' + err.error)
+      });
+    }
+
+    // 3. Verifica se quer alterar a SENHA (se o campo não estiver vazio)
+    if (dadosNovos.novaSenha && dadosNovos.novaSenha.trim() !== '') {
+      alterouAlgo = true;
+      // Precisamos adicionar esse método no UsuarioService depois!
+      this.usuarioService.atualizarSenha(senhaAtual, dadosNovos.novaSenha).subscribe({
+        next: () => {
+          this.perfilForm.patchValue({ novaSenha: '' }); // Limpa o campo
+        },
+        error: (err) => alert('Erro ao alterar senha: ' + err.error)
+      });
+    }
+
+    if (alterouAlgo) {
+      alert('Alterações solicitadas com sucesso!');
+    } else {
+      alert('Nenhuma alteração foi feita.');
+    }
+
+    this.desabilitarInputs();
   }
 
   voltar() {

@@ -32,10 +32,13 @@ public class UsuarioController {
     }
 
     @PostMapping("/validar")
-    public ResponseEntity<String> validar(@RequestParam String senhaAtual) {
+    public ResponseEntity<?> validar(@RequestParam String senhaAtual) {
         boolean valido = usuarioService.validarSenha(senhaAtual);
         if (valido) {
-            return ResponseEntity.ok("OK");
+            // Retorna um mapa JSON {"status": "OK"}
+            Map<String, String> response = new HashMap<>();
+            response.put("status", "OK");
+            return ResponseEntity.ok(response);
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Senha incorreta");
         }
@@ -57,14 +60,19 @@ public class UsuarioController {
     }
 
     @PutMapping("/alterar/senha")
-    public ResponseEntity<?> alterarSenha(@RequestParam String senhaAtual, @RequestParam String novaSenha) {
-        try {
-            Usuario usuario = usuarioService.alterarSenha(senhaAtual, novaSenha);
-            return ResponseEntity.ok("Senha alterada com sucesso");
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
+public ResponseEntity<?> alterarSenha(@RequestParam String senhaAtual, @RequestParam String novaSenha) {
+    try {
+        Usuario usuario = usuarioService.alterarSenha(senhaAtual, novaSenha);
+        
+        // Cria um JSON de resposta
+        Map<String, String> response = new HashMap<>();
+        response.put("mensagem", "Senha alterada com sucesso");
+        
+        return ResponseEntity.ok(response);
+    } catch (IllegalArgumentException e) {
+        return ResponseEntity.badRequest().body(e.getMessage());
     }
+}
 
     @PutMapping("/alterar/email")
     public ResponseEntity<?> alterarEmail(@RequestParam String senhaAtual, @RequestParam String novoEmail) {
