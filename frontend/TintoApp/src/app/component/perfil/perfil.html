@@ -30,13 +30,14 @@
       </div>
 
       <div class="campo-grupo">
-        <label for="dataNascimento" class="label-campo">Data de Nascimento</label>
+        <label class="label-campo">Data de Nascimento</label>
         <input
-          id="dataNascimento"
-          type="date"
-          formControlName="dataNascimento"
+          type="text"
+          [value]="dataFormatada"
           class="input-padrao"
+          disabled
         />
+        <input type="hidden" formControlName="dataNascimento" />
       </div>
 
       <div class="campo-grupo" *ngIf="modoEdicao">

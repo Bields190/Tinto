@@ -1,6 +1,7 @@
 package com.tinto.api.controller;
 
 import com.tinto.api.model.Usuario;
+import com.tinto.api.repository.UsuarioRepository;
 import com.tinto.api.service.UsuarioService;
 import com.tinto.api.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,19 +61,19 @@ public class UsuarioController {
     }
 
     @PutMapping("/alterar/senha")
-public ResponseEntity<?> alterarSenha(@RequestParam String senhaAtual, @RequestParam String novaSenha) {
-    try {
-        Usuario usuario = usuarioService.alterarSenha(senhaAtual, novaSenha);
-        
-        // Cria um JSON de resposta
-        Map<String, String> response = new HashMap<>();
-        response.put("mensagem", "Senha alterada com sucesso");
-        
-        return ResponseEntity.ok(response);
-    } catch (IllegalArgumentException e) {
-        return ResponseEntity.badRequest().body(e.getMessage());
+    public ResponseEntity<?> alterarSenha(@RequestParam String senhaAtual, @RequestParam String novaSenha) {
+        try {
+            Usuario usuario = usuarioService.alterarSenha(senhaAtual, novaSenha);
+
+            // Cria um JSON de resposta
+            Map<String, String> response = new HashMap<>();
+            response.put("mensagem", "Senha alterada com sucesso");
+
+            return ResponseEntity.ok(response);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
-}
 
     @PutMapping("/alterar/email")
     public ResponseEntity<?> alterarEmail(@RequestParam String senhaAtual, @RequestParam String novoEmail) {
@@ -89,4 +90,18 @@ public ResponseEntity<?> alterarSenha(@RequestParam String senhaAtual, @RequestP
         }
     }
 
+    @GetMapping("/me")
+    public ResponseEntity<?> obterPerfilAtual() {
+        try {
+            // Pega o email do usuário logado no contexto do Spring Security
+            String email = org.springframework.security.core.context.SecurityContextHolder
+                    .getContext().getAuthentication().getName();
+
+            // Busca no banco através do service
+            Usuario usuario = usuarioService.buscarPorEmail(email);
+            return ResponseEntity.ok(usuario);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuário não encontrado");
+        }
+    }
 }

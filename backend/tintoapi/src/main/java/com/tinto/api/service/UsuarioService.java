@@ -11,6 +11,7 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.Optional;
 
+
 @Service
 public class UsuarioService {
 
@@ -78,4 +79,9 @@ public class UsuarioService {
     private int calcularIdade(LocalDate dataNascimento) {
         return Period.between(dataNascimento, LocalDate.now()).getYears();
     }
+
+    public Usuario buscarPorEmail(String email) {
+    return usuarioRepository.findByEmail(email)
+            .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+}
 }

@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Router } from '@angular/router';
 import { UsuarioService } from '../../service/usuario.service';
 import { jwtDecode } from 'jwt-decode';
+import { ChangeDetectorRef } from '@angular/core'; 
 
 @Component({
   selector: 'app-perfil',
@@ -18,13 +19,13 @@ export class Perfil implements OnInit {
   modoEdicao = false;
   showSenhaConfirmModal = false;
   erroSenha = '';
-  
-  // Variáveis para guardar os valores originais e comparar o que mudou
+  dataFormatada: string = 'Carregando...';
   dadosOriginais: any = {};
   
   private fb = inject(FormBuilder);
   private router = inject(Router);
   private usuarioService = inject(UsuarioService);
+  private cdr = inject(ChangeDetectorRef);
 
   constructor() {
     this.perfilForm = this.fb.group({
@@ -40,8 +41,8 @@ export class Perfil implements OnInit {
   }
 
   ngOnInit() {
-    this.carregarDadosDoToken();
-  }
+  this.carregarDadosDoBanco();
+}
 
   habilitarEdicao() {
     this.erroSenha = '';
@@ -155,4 +156,25 @@ export class Perfil implements OnInit {
   voltar() {
     this.router.navigate(['/adega']);
   }
+
+  carregarDadosDoBanco() {
+  this.usuarioService.obterPerfil().subscribe({
+    next: (user) => {
+      if (user.dataNascimento) {
+        const partes = user.dataNascimento.split('-'); // [2000, 12, 31]
+        this.dataFormatada = `${partes[2]}/${partes[1]}/${partes[0]}`;
+        this.cdr.detectChanges();
+      }
+      
+      this.perfilForm.patchValue({
+        nome: user.nome,
+        email: user.email,
+        dataNascimento: user.dataNascimento
+      });
+
+      this.dadosOriginais = this.perfilForm.getRawValue();
+    },
+    error: (err) => console.error("Erro ao buscar dados do banco", err)
+  });
+}
 }

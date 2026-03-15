@@ -28,4 +28,8 @@ atualizarPerfil(senhaAtual: string, dados: any): Observable<any> {
 atualizarSenha(senhaAtual: string, novaSenha: string): Observable<any> {
   return this.http.put(`${this.API_URL}/alterar/senha?senhaAtual=${senhaAtual}&novaSenha=${novaSenha}`, {});
 }
+
+obterPerfil(): Observable<any> {
+  return this.http.get(`${this.API_URL}/me`);
+}
 }
