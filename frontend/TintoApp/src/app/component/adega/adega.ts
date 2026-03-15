@@ -156,8 +156,11 @@ export class Adega implements OnInit, OnDestroy {
   // --- MÉTODOS VISUAIS E ROTAS ---
 
   protected imagemDoVinho(vinho: AdegaVinho): string {
-    return vinho.urlCapa || this.fallbackImage;
+  if (vinho.urlCapa) {
+    return vinho.urlCapa;
   }
+  return `http://localhost:8080/api/fotos/capa/${vinho.id}`;
+}
 
   protected tratarErroImagem(evento: Event): void {
     const imagem = evento.target as HTMLImageElement;

@@ -11,11 +11,12 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        // Caminho da pasta de uploads na raiz do projeto
-        Path uploadDir = Paths.get("./uploads");
-        String uploadPath = uploadDir.toFile().getAbsolutePath();
+        // Pega o caminho absoluto da pasta uploads na raiz do projeto
+        String rootPath = System.getProperty("user.dir");
+        String uploadPath = Paths.get(rootPath, "uploads").toUri().toString();
 
-        registry.addResourceHandler("/uploads/**")
-                .addResourceLocations("file:/" + uploadPath + "/");
+        // Mapeia a URL que o Angular usa para a pasta física
+        registry.addResourceHandler("/api/fotos/exibir/**")
+                .addResourceLocations(uploadPath + "/");
     }
 }

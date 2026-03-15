@@ -7,6 +7,7 @@ import org.springframework.core.io.UrlResource;
 import org.springframework.http.MediaType;
 
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Collections;
@@ -35,32 +36,18 @@ public class FotoVinhoController {
         }
     }
 
-    @GetMapping("/exibir/{nomeArquivo:.+}")
-    public ResponseEntity<Resource> exibirFoto(@PathVariable String nomeArquivo) {
-        try {
-            Path filePath = Paths.get("uploads").resolve(nomeArquivo);
-            Resource resource = new UrlResource(filePath.toUri());
-
-            if (resource.exists() || resource.isReadable()) {
-                return ResponseEntity.ok()
-                        .contentType(MediaType.IMAGE_JPEG)
-                        .body(resource);
-            } else {
-                return ResponseEntity.notFound().build();
-            }
-        } catch (MalformedURLException e) {
-            return ResponseEntity.internalServerError().build();
-        }
-    }
-
     @GetMapping("/capa/{vinhoId}")
-    public ResponseEntity<String> exibirCapa(@PathVariable Long vinhoId) {
-        String url = fotoVinhoService.buscarUrlPrimeiraFoto(vinhoId);
-        if (url != null) {
-            return ResponseEntity.ok(url);
-        } else {
-            return ResponseEntity.noContent().build(); // Retorna 204 se não houver foto
+    public ResponseEntity<Void> exibirCapa(@PathVariable Long vinhoId) {
+        String urlCompleta = fotoVinhoService.buscarUrlPrimeiraFoto(vinhoId);
+
+        if (urlCompleta == null) {
+            return ResponseEntity.notFound().build();
         }
+
+        // Redireciona para a URL que o WebConfig agora gerencia
+        return ResponseEntity.status(HttpStatus.FOUND)
+                .location(URI.create(urlCompleta))
+                .build();
     }
 
     @DeleteMapping("/{fotoId}")
