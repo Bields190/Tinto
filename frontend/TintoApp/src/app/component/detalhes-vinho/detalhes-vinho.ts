@@ -220,4 +220,23 @@ export class DetalhesVinho {
 
     return `${dia.padStart(2, '0')}/${mes.padStart(2, '0')}/${ano}`;
   }
+  
+  protected excluirVinho(): void {
+  const vinho = this.vinho();
+  if (!vinho) return;
+
+  // Confirmação simples para evitar erros
+  if (confirm(`Tem certeza que deseja excluir o vinho "${vinho.nome}"?`)) {
+    this.adegaService.excluirVinho(vinho.id.toString()).subscribe({
+      next: () => {
+        alert('Vinho excluído com sucesso!');
+        this.router.navigate(['/adega']);
+      },
+      error: (err) => {
+        console.error(err);
+        alert('Erro ao excluir o vinho.');
+      }
+    });
+  }
+}
 }
