@@ -80,4 +80,8 @@ export class AdegaService {
   excluirVinho(id: string): Observable<void> {
     return this.http.delete<void>(`http://localhost:8080/api/vinhos/${id}`);
   }
+
+  excluirFotoDoBanco(fotoId: number): Observable<any> {
+  return this.http.delete(`http://localhost:8080/api/fotos/${fotoId}`);
+}
 }

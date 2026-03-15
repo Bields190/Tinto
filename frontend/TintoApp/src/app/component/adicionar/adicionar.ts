@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AdegaService } from '../../service/adega.service';
 
 interface PhotoSlot {
+  id?: number;
   file?: File;
   url?: string;
 }
@@ -31,7 +32,7 @@ export class Adicionar {
   ngOnInit() {
     const id = this.activatedRoute.snapshot.paramMap.get('id');
     if (id) {
-      this.carregarDadosVinho(id); 
+      this.carregarDadosVinho(id);
     }
   }
 
@@ -77,117 +78,129 @@ export class Adicionar {
 
     const url = URL.createObjectURL(file);
 
-    // Revoke previous object URL if exists
     const existing = this.photos[index]?.url;
     if (existing) {
       URL.revokeObjectURL(existing);
     }
 
     this.photos[index] = { file, url };
-    // Force change detection for *ngFor / template update
     this.photos = [...this.photos];
-
-    // Reset input to allow selecting the same file again
     input.value = '';
   }
 
   removePhoto(index: number, event: MouseEvent) {
     event.stopPropagation();
+    const photo = this.photos[index];
 
-    const existing = this.photos[index]?.url;
-    if (existing) {
-      URL.revokeObjectURL(existing);
+    // Caso 1: A foto já existe no servidor (tem ID)
+    if (photo.id) {
+      if (confirm('Deseja realmente excluir esta foto permanentemente?')) {
+        this.adegaService.excluirFotoDoBanco(photo.id).subscribe({
+          next: () => {
+            this.limparSlot(index);
+            console.log('Foto removida do servidor');
+          },
+          error: (err) => console.error('Erro ao excluir foto do banco', err)
+        });
+      }
+    }
+    else {
+      this.limparSlot(index);
+    }
+  }
+
+  // Função auxiliar para limpar o slot e liberar memória
+  private limparSlot(index: number) {
+    const existingUrl = this.photos[index]?.url;
+    if (existingUrl && existingUrl.startsWith('blob:')) {
+      URL.revokeObjectURL(existingUrl);
     }
 
     this.photos[index] = {};
     this.photos = [...this.photos];
   }
-
   protected salvarVinho(): void {
-  if (this.form.invalid) return;
+    if (this.form.invalid) return;
 
-  const id = this.activatedRoute.snapshot.paramMap.get('id');
-  const vinhoData = {
-    nome: this.form.value.nomeVinho,
-    vinicola: this.form.value.vinicola,
-    tipoUva: this.form.value.uva,
-    pais: this.form.value.pais,
-    teorAlcoolico: this.form.value.teorAlcoolico,
-    safra: this.form.value.safra,
-    dataConsumo: this.form.value.dataConsumo,
-    harmonizacoes: this.form.value.harmonizacao ? [this.form.value.harmonizacao] : [],
-    avaliacao: this.rating,
-    comentario: this.form.value.comments,
-    isFavorito: false
-  };
+    const id = this.activatedRoute.snapshot.paramMap.get('id');
+    const vinhoData = {
+      nome: this.form.value.nomeVinho,
+      vinicola: this.form.value.vinicola,
+      tipoUva: this.form.value.uva,
+      pais: this.form.value.pais,
+      teorAlcoolico: this.form.value.teorAlcoolico,
+      safra: this.form.value.safra,
+      dataConsumo: this.form.value.dataConsumo,
+      harmonizacoes: this.form.value.harmonizacao ? [this.form.value.harmonizacao] : [],
+      avaliacao: this.rating,
+      comentario: this.form.value.comments,
+      isFavorito: false
+    };
 
-  if (id) {
-    // --- MODO EDIÇÃO (PUT) ---
-    this.adegaService.atualizarVinho(id, vinhoData).subscribe({
-      next: () => {
-        const novasFotos = this.photos.filter(p => p.file);
-        if (novasFotos.length > 0) {
-          this.adegaService.uploadFotos(parseInt(id), novasFotos.map(p => p.file!)).subscribe({
-            next: () => this.router.navigate(['/adega'])
-          });
-        } else {
-          this.router.navigate(['/adega']);
+    if (id) {
+      // --- MODO EDIÇÃO (PUT) ---
+      this.adegaService.atualizarVinho(id, vinhoData).subscribe({
+        next: () => {
+          const novasFotos = this.photos.filter(p => p.file);
+          if (novasFotos.length > 0) {
+            this.adegaService.uploadFotos(parseInt(id), novasFotos.map(p => p.file!)).subscribe({
+              next: () => this.router.navigate(['/adega'])
+            });
+          } else {
+            this.router.navigate(['/adega']);
+          }
         }
-      }
-    });
-  } else {
-    // --- MODO CADASTRO (POST) ---
-    this.adegaService.registrarVinho(vinhoData).subscribe({
-      next: (vinhoCriado) => {
-        const arquivosParaUpload = this.photos.filter(p => p.file).map(p => p.file!);
-        if (arquivosParaUpload.length > 0) {
-          this.adegaService.uploadFotos(vinhoCriado.id, arquivosParaUpload).subscribe({
-            next: () => this.router.navigate(['/adega'])
-          });
-        } else {
-          this.router.navigate(['/adega']);
+      });
+    } else {
+      // --- MODO CADASTRO (POST) ---
+      this.adegaService.registrarVinho(vinhoData).subscribe({
+        next: (vinhoCriado) => {
+          const arquivosParaUpload = this.photos.filter(p => p.file).map(p => p.file!);
+          if (arquivosParaUpload.length > 0) {
+            this.adegaService.uploadFotos(vinhoCriado.id, arquivosParaUpload).subscribe({
+              next: () => this.router.navigate(['/adega'])
+            });
+          } else {
+            this.router.navigate(['/adega']);
+          }
         }
-      }
-    });
+      });
+    }
   }
-}
 
   carregarDadosVinho(id: string) {
-  const idNumerico = parseInt(id, 10); 
-  
-  this.adegaService.buscarVinhoPorId(idNumerico).subscribe({
-    next: (vinho) => {
-      // 1. Preencher o formulário
-      this.form.patchValue({
-        nomeVinho: vinho.nome,
-        vinicola: vinho.vinicola,
-        uva: vinho.tipoUva,
-        pais: vinho.pais,
-        safra: vinho.safra,
-        teorAlcoolico: vinho.teorAlcoolico,
-        dataConsumo: vinho.dataConsumo,
-        harmonizacao: vinho.harmonizacoes ? vinho.harmonizacoes.join(', ') : '',
-        comments: vinho.comentario
-      });
+    const idNumerico = parseInt(id, 10);
 
-      this.rating = vinho.avaliacao ?? 0;
+    this.adegaService.buscarVinhoPorId(idNumerico).subscribe({
+      next: (vinho) => {
+        this.form.patchValue({
+          nomeVinho: vinho.nome,
+          vinicola: vinho.vinicola,
+          uva: vinho.tipoUva,
+          pais: vinho.pais,
+          safra: vinho.safra,
+          teorAlcoolico: vinho.teorAlcoolico,
+          dataConsumo: vinho.dataConsumo,
+          harmonizacao: vinho.harmonizacoes ? vinho.harmonizacoes.join(', ') : '',
+          comments: vinho.comentario
+        });
 
-      // 2. Preencher as fotos existentes (Agora dentro do subscribe!)
-      if (vinho.fotos && vinho.fotos.length > 0) {
-        this.photos = vinho.fotos.map(f => ({
-          url: `http://localhost:8080/api/fotos/exibir/${f.arquivoPath}`
-        }));
-        
-        // Preencher o restante dos slots vazios até 3
-        while (this.photos.length < 3) {
-          this.photos.push({});
+        this.rating = vinho.avaliacao ?? 0;
+
+        if (vinho.fotos && vinho.fotos.length > 0) {
+          this.photos = vinho.fotos.map(f => ({
+            id: f.id,
+            url: `http://localhost:8080/api/fotos/exibir/${f.arquivoPath}`
+          }));
+
+          while (this.photos.length < 3) {
+            this.photos.push({});
+          }
+        } else {
+          this.photos = Array.from({ length: 3 }, () => ({}));
         }
-      } else {
-        // Se não houver fotos, garante que o array esteja limpo com slots vazios
-        this.photos = Array.from({ length: 3 }, () => ({}));
-      }
-    },
-    error: (err) => console.error('Erro ao carregar dados do vinho', err)
-  });
-}
+      },
+      error: (err) => console.error('Erro ao carregar dados do vinho', err)
+    });
+  }
 }
