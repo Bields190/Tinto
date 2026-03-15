@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-cadastro',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule], // ReactiveFormsModule é obrigatório aqui
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './cadastro.html',
   styleUrl: './cadastro.scss',
 })

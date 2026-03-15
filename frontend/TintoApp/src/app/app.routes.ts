@@ -6,6 +6,7 @@ import { Perfil } from './component/perfil/perfil';
 import { Adicionar } from './component/adicionar/adicionar';
 import { Adega } from './component/adega/adega';
 import { DetalhesVinho } from './component/detalhes-vinho/detalhes-vinho';
+import { Alterar } from './component/alterar/alterar'; 
 
 export const routes: Routes = [
   { path: '', redirectTo: 'inicio', pathMatch: 'full' },
@@ -17,4 +18,5 @@ export const routes: Routes = [
   { path: 'adega', component: Adega },
   { path: 'vinhos/:id', component: DetalhesVinho },
   { path: 'editar/:id', component: Adicionar }, 
+  { path: 'alterar', component: Alterar },
 ];

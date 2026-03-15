@@ -1,0 +1,37 @@
+<section class="login-container">
+  <div class="logo-tinto">
+    <img src="assets/img/Tinto - Areia.png" alt="Logo Tinto">
+  </div>
+
+  <div class="forms">
+    <h1 class="titulo-forms">ALTERAR SENHA</h1>
+
+    <form class="forms-itens" [formGroup]="alterarForm" (ngSubmit)="onSubmit()">
+      <div class="campo-grupo">
+        <label for="nova-senha" class="label-campo">Nova Senha:</label>
+        <input
+          id="nova-senha"
+          type="password"
+          formControlName="novaSenha"
+          class="input-padrao"
+          placeholder="Digite sua nova senha..."
+        />
+      </div>
+
+      <div class="campo-grupo">
+        <label for="senha" class="label-campo">Confirme a Senha:</label>
+        <input
+          id="senha"
+          type="password"
+          formControlName="confirmaSenha"
+          class="input-padrao"
+          placeholder="Digite novamente sua nova senha..."
+        />
+      </div>
+
+      <div class="erro-senha" *ngIf="erro">{{ erro }}</div>
+
+      <button type="submit" class="botao-padrao botao-cadastrar">SALVAR SENHA</button>
+    </form>
+  </div>
+</section>

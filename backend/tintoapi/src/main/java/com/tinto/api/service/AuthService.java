@@ -8,13 +8,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.Date;
+import java.util.Map;
 import java.util.Optional;
+import java.util.Random;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 public class AuthService {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+
+    private final Map<String, String> resetCodes = new ConcurrentHashMap<>();
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
@@ -29,6 +34,37 @@ public class AuthService {
             return generateToken(usuarioOpt.get());
         }
         throw new RuntimeException("Credenciais inválidas");
+    }
+
+    public void solicitarRedefinicaoSenha(String email) {
+        Usuario usuario = usuarioRepository.findByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado"));
+
+        String codigo = String.format("%06d", new Random().nextInt(999999));
+        resetCodes.put(email, codigo);
+        System.out.println("[DEBUG] Código de redefinição para " + email + " = " + codigo);
+        // TODO: enviar email via serviço de email real.
+    }
+
+    public boolean verificarCodigoRedefinicao(String email, String codigo) {
+        if (!resetCodes.containsKey(email)) {
+            return false;
+        }
+        String codigoEsperado = resetCodes.get(email);
+        return codigoEsperado.equals(codigo);
+    }
+
+    public void redefinirSenha(String email, String codigo, String novaSenha) {
+        if (!verificarCodigoRedefinicao(email, codigo)) {
+            throw new IllegalArgumentException("Código inválido ou expirado");
+        }
+
+        Usuario usuario = usuarioRepository.findByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado"));
+
+        usuario.setSenha(passwordEncoder.encode(novaSenha));
+        usuarioRepository.save(usuario);
+        resetCodes.remove(email);
     }
 
     /**

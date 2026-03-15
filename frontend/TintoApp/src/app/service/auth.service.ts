@@ -32,4 +32,16 @@ export class AuthService {
   isLogado(): boolean {
     return !!this.getToken();
   }
+
+  esqueciSenha(email: string) {
+    return this.http.post(`${this.API_URL}/auth/esqueci-senha`, { email }, { responseType: 'text' });
+  }
+
+  verificarCodigo(email: string, codigo: string) {
+    return this.http.post<boolean>(`${this.API_URL}/auth/verificar-codigo`, { email, codigo });
+  }
+
+  redefinirSenha(email: string, codigo: string, novaSenha: string) {
+    return this.http.post(`${this.API_URL}/auth/redefinir-senha`, { email, codigo, novaSenha }, { responseType: 'text' });
+  }
 }

@@ -29,7 +29,7 @@
         />
       </div>
 
-      <a class="esqueci-senha" href="#">Esqueci minha senha</a>
+      <a class="esqueci-senha" href="#" (click)="abrirModalEsqueciSenha($event)">Esqueci minha senha</a>
 
       <button type="submit" [disabled]="loginForm.invalid" class="botao-padrao botao-cadastrar">ENTRE</button>
     </form>
@@ -38,4 +38,44 @@
       <a routerLink="/cadastro" class="link-login">Não possui cadastro? Cadastre-se</a>
     </div>
   </div>
+
+  <section *ngIf="showEsqueciSenhaModal" class="modal-overlay">
+    <div class="modal-content">
+      <h2>Recuperar senha</h2>
+
+      <ng-container *ngIf="etapaEsqueciSenha === 1">
+        <p>Informe o e-mail cadastrado para receber o código.</p>
+        <div class="campo-grupo">
+          <input
+            type="email"
+            [(ngModel)]="esqueceuEmail"
+            placeholder="Digite seu email"
+            class="input-padrao"
+          />
+        </div>
+        <div class="erro-senha" *ngIf="erroEsqueciSenha">{{ erroEsqueciSenha }}</div>
+        <div class="botoes-grupo">
+          <button type="button" class="botao-padrao" (click)="enviarEmailParaRedefinicao()">Enviar</button>
+          <button type="button" class="botao-padrao" (click)="fecharModalEsqueciSenha()">Cancelar</button>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="etapaEsqueciSenha === 2">
+        <p>Digite o código enviado para {{ emailDeVerificacao }}.</p>
+        <div class="campo-grupo">
+          <input
+            type="text"
+            [(ngModel)]="codigo"
+            placeholder="Código de 6 dígitos"
+            class="input-padrao"
+          />
+        </div>
+        <div class="erro-senha" *ngIf="erroEsqueciSenha">{{ erroEsqueciSenha }}</div>
+        <div class="botoes-grupo">
+          <button type="button" class="botao-padrao" (click)="verificarCodigoEsqueciSenha()">Confirmar</button>
+          <button type="button" class="botao-padrao" (click)="fecharModalEsqueciSenha()">Cancelar</button>
+        </div>
+      </ng-container>
+    </div>
+  </section>
 </section>
